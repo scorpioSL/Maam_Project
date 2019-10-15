@@ -1,0 +1,79 @@
+{% extends "website/homeLayout.html" %}
+{% block content %}
+
+<style>
+    .white{
+        color: white
+    }
+
+    ul#horizontal-list li {
+    display: inline;
+  }
+</style>
+
+<div class="container contact-section my-5 col-lg-8 col-md-6">
+        <form class="border border-light p-5" style="font-weight: 500">
+
+                <div><p class="h4 mb-4 text-center">Application Form </p>
+                <p><h4>Job Tittle</h4></p></div>
+
+
+                <label >Name</label>
+                <input type="text" id="textInput" class="form-control mb-4" >
+            
+                <label >Residential Address</label>
+                <input type="text" id="textInput" class="form-control mb-4" >
+            
+                <label >Contact Number</label>
+                <input type="text" id="textInput" class="form-control mb-4" >
+                
+                <label >Email</label>
+                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4">
+            
+                <label for="textInput">Academic Qualification</label>
+                <textarea class="form-control rounded-0 mb-4" id="exampleFormControlTextarea2" rows="3"></textarea>
+
+                <label for="textInput">Other Qualification</label>
+                <textarea class="form-control rounded-0 mb-4" id="exampleFormControlTextarea2" rows="3"></textarea>
+
+                <label for="textInput">Experience</label>
+                <textarea class="form-control rounded-0 mb-4" id="exampleFormControlTextarea2" rows="3"></textarea>
+            
+                <div class="input-group mb-4 ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload your cv</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fileInput" aria-describedby="fileInput">
+                        <label class="custom-file-label" for="fileInput"></label>
+                    </div>
+                </div>
+            
+                <button class="btn btn-info btn-block my-4" type="submit">Send</button>
+            
+                
+            </form>
+        <!-- bottom nav -->
+    <div>
+            <div id="menu-outer" style="margin-top:10px">
+      <div class="table">
+        <ul id="horizontal-list">
+          <li><a href="#">Company Overview <span>|</span></a></li>
+          <li><a href="#">Vision & mission <span>|</span></a></li>
+          <li><a href="#">Heritage <span>|</span></a></li>
+          <li><a href="#">CSR <span>|</span></a></li>
+          <li><a href="#">News <span>|</span></a></li>
+          <li><a href="#">Awards</a></li>
+        </ul>
+      </div>
+    </div>
+        </div>
+           <!-- bottom nav -->
+    
+</div>
+
+
+{% endblock content%}
+
+
+

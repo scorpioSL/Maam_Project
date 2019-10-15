@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static',filename='assets/images/favicon.png')}}">
+    <title>Register</title>
+    <!-- Custom CSS -->
+    <link href="{{url_for('static',filename='dist/css/style.min.css')}}" rel="stylesheet">
+    <!-- ConfirmJS CSS File -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/ConfirmJS/jquery-confirm.css')}}">
+
+    <style>
+        svg {
+            overflow: visible;
+            width: 100%;
+            height: 100%;
+        }
+
+        svg g {
+            animation: slide 2s linear infinite;
+        }
+
+        svg g:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        svg g:nth-child(2) path {
+            animation-delay: 0.5s;
+            stroke-dasharray: 0px 158px;
+            stroke-dashoffset: 1px;
+        }
+
+        svg path {
+            stroke: url(#gradient);
+            stroke-width: 20px;
+            stroke-linecap: round;
+            fill: none;
+            stroke-dasharray: 0 157px;
+            stroke-dashoffset: 0;
+            animation: escalade 2s cubic-bezier(0.8, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateY(-50px);
+            }
+
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        @keyframes escalade {
+            0% {
+                stroke-dasharray: 0 157px;
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dasharray: 156px 157px;
+                stroke-dashoffset: 0;
+            }
+
+            100% {
+                stroke-dasharray: 156px 157px;
+                stroke-dashoffset: -156px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main-wrapper" id="MainDiv">
+
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+            <div class="auth-box bg-dark border-top border-secondary" style="margin:0;">
+                <div>
+                    <div class="text-center p-t-20 p-b-20">
+                        <h3 style="color: white">Register</h3>
+                    </div>
+                    <!-- Form -->
+                    <form class="form-horizontal m-t-20" action="index.html">
+
+                        <div class="row p-b-30">
+                            <div class="col-12">
+                                <!--  User Email -->
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i
+                                                class="ti-user"></i></span>
+                                    </div>
+                                    <input type="text" name="TextBoxUsername" id="TextBoxUsername"
+                                        class="form-control form-control-lg" placeholder="Username"
+                                        aria-label="Username" aria-describedby="basic-addon1" required>
+                                </div>
+
+                                <!-- User Password -->
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i
+                                                class="ti-pencil"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control form-control-lg" name="TextBoxPassword"
+                                        id="TextBoxPassword" placeholder="Password" aria-label="Password"
+                                        aria-describedby="basic-addon1" required>
+                                </div>
+                                <!--  Confirm Password -->
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-info text-white" id="basic-addon2"><i
+                                                class="ti-pencil"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control form-control-lg"
+                                        name="TextBoxConfirmPassword" id="TextBoxConfirmPassword"
+                                        placeholder=" Confirm Password" aria-label="Password"
+                                        aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  Sign Up Button -->
+                        <div class="row border-top border-secondary">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20">
+                                        <button class="btn btn-block btn-lg btn-info" id="ButtonSignUp"
+                                            type="button">Sign Up</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Loader" style="margin: 0;position: relative;" hidden>
+        <svg>
+            <g>
+                <path d="M 50,100 A 1,1 0 0 1 50,0" />
+            </g>
+            <g>
+                <path d="M 50,75 A 1,1 0 0 0 50,-25" />
+            </g>
+            <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FF56A1;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FF9350;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="{{url_for('static',filename='assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <!-- ConfirmJS JS File -->
+    <script src="{{ url_for('static',filename='js/ConfirmJS/jquery-confirm.js') }}"></script>
+    <!-- Global Customize JS Methods File -->
+    <script src="{{ url_for('static',filename='js/GlobalJS/Global.js') }}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{url_for('static',filename='assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+
+        $(document).ready(function(){
+            $("#MainDiv").show(slow);
+        });
+
+        $('#ButtonSignUp').click(function (event) {
+            sendData();
+        });
+
+        function sendData() {
+            $Username = $('#TextBoxUsername').val();
+            $Password = $('#TextBoxPassword').val();
+            $ConfirmPassword = $('#TextBoxConfirmPassword').val();
+            if ($Username == '' || $Password == '' || $ConfirmPassword == '') {
+                showMessage('Error', 'All Fields Must Be Filled!');
+                return;
+            }
+            if ($Password === $ConfirmPassword) {
+                $DataPacket = {
+                    'Username': $Username,
+                    'Password': $Password
+                }
+                $.ajax({
+                    type: 'post',
+                    url: '/register',
+                    data: $DataPacket,
+                    dataType: 'json',
+                    success: function (Result) {
+                        if (Result.Type === 'Success') {
+                            $('#MainDiv').hide();
+                            $('#Loader').show();
+                            setTimeout(function () {
+                                $('#Loader').hide();
+                                $('#MainDiv').show();
+                            }, 10000);
+                            openWindow('/login?ShowAlert=True');
+                        } else if (Result.Type === 'Warning') {
+                            showMessage('Error!', Result.Message);
+                        } else {
+                            showMessage('Error!', Result.Message);
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.status, errorThrown);
+                    }
+                });
+            }
+            else {
+                showMessage('Error!', 'Password Fields Does Not Match!');
+                return;
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+.navbar{
+	
+}
+
+.nav-item{
+	font-size: 13px
+}
+
+.navbar-brand img{
+	height: 35px;
+}
+.indroduction{
+	padding-top: 20px;
+	
+}
+.whatIsMaam{
+	height: 120px;
+	width: 140px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*Defind Classes*/
+.heading{
+font-family: 'Courgette', cursive;
+}

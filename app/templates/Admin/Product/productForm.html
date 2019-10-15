@@ -1,0 +1,65 @@
+{% extends "Admin/Dashboard/dashboardLayout.html" %}
+{% block content %}
+
+ <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Add New Product</h4>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid col-md-9 col-lg-10">
+
+           <form>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Item Code</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black" >
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Product Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black" >
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Unit</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black" >
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Price</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black">
+            </div>
+
+            <div class="form-group">
+                    <label for="exampleFormControlInput1">Item category</label>
+            <select class="custom-select custom-select-sm "style="border-color: black">
+                <option selected>Select</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" style="border-color: black">
+            </div>
+
+             <button type="button" class="btn btn-dark mt-2">Submit</button>
+
+        </form>
+
+    </div>
+
+{% endblock content %}

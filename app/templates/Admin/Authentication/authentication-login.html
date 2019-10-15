@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static',filename='assets/images/favicon.png')}}">
+    <title>Login</title>
+    <!-- Custom CSS -->
+    <link href="{{url_for('static',filename='dist/css/style.min.css')}}" rel="stylesheet">
+     <!-- ConfirmJS CSS File -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/ConfirmJS/jquery-confirm.css')}}">
+    
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+            <div class="auth-box bg-dark border-top border-secondary">
+                <div id="ShowSuccessAlert" hidden="" class="alert alert-success alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="text-center">
+                        <strong>Successfully Registered!</strong>
+                    </div>
+                </div>
+                <div id="loginform">
+                    <div class="text-center p-t-20 p-b-20">
+                       <h3 style="color: white">Login</h3>
+                    </div>
+                    <!-- Form -->
+                    <form class="form-horizontal m-t-20" id="loginform" action="index.html">
+                        <div class="row p-b-30">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-user"></i></span>
+                                    </div>
+                                    <input type="text" id="TextBoxUserName" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                    </div>
+                                    <input type="password" id="TextBoxPassword" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row border-top border-secondary">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="p-t-20">
+                                        <button class="btn btn-info"  type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
+                                        <button id="ButtonLogin" class="btn btn-success float-right" type="button">Login</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="{{url_for('static',filename='assets/libs/jquery/dist/jquery.min.js')}}"></script>
+     <!-- ConfirmJS JS File -->
+    <script src="{{ url_for('static',filename='js/ConfirmJS/jquery-confirm.js') }}"></script>
+    <!-- Global Customize JS Methods File -->
+    <script src="{{ url_for('static',filename='js/GlobalJS/Global.js') }}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{url_for('static',filename='assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+
+    $(document).ready(function(){
+        var ShowAlert = '{{ ShowAlert }}'
+        if(ShowAlert == 'True')
+        {
+            $('#ShowSuccessAlert').removeAttr('hidden');
+        }
+    });
+
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+    // ============================================================== 
+    // Login and Recover Password 
+    // ============================================================== 
+    $('#to-recover').on("click", function() {
+        $("#loginform").slideUp();
+        $("#recoverform").fadeIn();
+    });
+    $('#to-login').click(function(){
+        
+        $("#recoverform").hide();
+        $("#loginform").fadeIn();
+    });
+
+    $('#ButtonLogin').click(function(){
+        Login();
+    });
+
+    function Login()
+    {
+        $Username = $('#TextBoxUserName').val();
+        $Password = $('#TextBoxPassword').val();
+        if($Username != "" && $Password != "")
+        {
+            $.ajax({
+                type:'post',
+                url:'/login',
+                data:{'Username':$Username,'Password':$Password},
+                success:function(result)
+                {
+                    if(result.Type == 'Success')
+                    {
+                        openWindow('/dashboard');
+                        return;
+                    }
+                    showMessage(result.Type,result.Message);
+                    return;
+                },
+                error:function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log(jqXHR.status, errorThrown);
+                }
+            });
+        }
+    }
+
+    </script>
+
+</body>
+
+</html>
