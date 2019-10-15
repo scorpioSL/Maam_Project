@@ -2,51 +2,74 @@
 {% block content %}
 
 <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Post CSR Events</h4>
-                </div>
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Post CSR Events</h4>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid col-md-9 col-lg-10">
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid col-md-9 col-lg-10">
 
-         <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Tillte<span style="color: red">*</span></label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black" required="" >
-        </div>
+        <form id="AddCsrPost">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Title<span style="color: red">*</span></label>
+                <input type="text" class="form-control" id="TextBoxTitle" style="border-color: black" required="">
+            </div>
 
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Sub tittle</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black" >
-        </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Sub title</label>
+                <input type="text" class="form-control" id="TextBoxSubTitle" style="border-color: black">
+            </div>
 
 
 
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">Content<span style="color: red">*</span></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" style="border-color: black" required=""></textarea>
-        </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Content<span style="color: red">*</span></label>
+                <textarea class="form-control" id="TextAreaContent" name="TextAreaContent" rows="5" style="border-color: black"
+                    required=""></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="exampleFormControlFile1">Image</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" style="border-color: black">
-        </div>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Image</label>
+                <input type="file" class="form-control-file" id="InputFieldImage" style="border-color: black">
+            </div>
 
-        <button type="submit" class="btn btn-dark mt-2" >Submit</button>
+            <button type="submit" class="btn btn-dark mt-2">Submit</button>
 
-    </form>
+        </form>
 
     </div>
 
-{% endblock content %}
+    <script>
+        // Sending The Whole Form Together Because Of File Uploading
+        $("#AddCsrPost").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/Add_Csr',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    $("form").trigger("reset");
+                    console.log(data);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    </script>
+
+    {% endblock content %}

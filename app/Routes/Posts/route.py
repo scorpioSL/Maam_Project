@@ -14,8 +14,10 @@ def add_Awards():
 
 
 # *******************---Add New Csr Events---******************
-@posts.route('/Add_Csr')
+@posts.route('/Add_Csr',methods = ['GET','POST'])
 def add_Csr():
+	if request.method == 'POST':
+		pass
 	return render_template('Admin/Posts/CSR.html')
 
 
