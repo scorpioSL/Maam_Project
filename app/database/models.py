@@ -29,11 +29,10 @@ class UserType(db.Document):
 	
 
 class UserLog(db.Document):
-	UserLogId=db.StringField()
 	User=db.StringField()
-	UserLogDescription=db.StringField()
+	Action = db.StringField()
+	Description=db.StringField()
 	Response=db.StringField()
-	TimeDate=db.DateTimeField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
@@ -42,7 +41,6 @@ class UserLog(db.Document):
 
 
 class Post(db.Document):
-	PostId=db.StringField(unique=True)
 	PostTittle=db.StringField()
 	PostContent=db.StringField()
 	PostImage=db.StringField()
@@ -54,7 +52,6 @@ class Post(db.Document):
 	
 
 class PostType(db.Document):
-	PostTypeId=db.StringField(unique=True)
 	PostTypeDescription=db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
@@ -63,7 +60,6 @@ class PostType(db.Document):
 	
 
 class Vacancy(db.Document):
-	VacancyId=db.StringField()
 	Tittle=db.StringField()
 	DepartmentId=db.ReferenceField('Department')
 	Poster=db.StringField()
@@ -74,7 +70,6 @@ class Vacancy(db.Document):
 	
 
 class Department(db.Document):
-	DepartmentId=db.StringField()
 	DepDescription=db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
@@ -95,7 +90,6 @@ class Feedback(db.Document):
 	
 
 class FeedbackType(db.Document):
-	FeedbackTypeId=db.StringField()
 	Description=db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
