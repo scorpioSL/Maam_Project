@@ -14,11 +14,18 @@ def add_Awards():
 
 
 # *******************---Add New Csr Events---******************
+# Have To save image in server and send to the db
 @posts.route('/Add_Csr',methods = ['GET','POST'])
 def add_Csr():
 	if request.method == 'POST':
-		pass
-	return render_template('Admin/Posts/CSR.html')
+		Title = request.form['TextBoxTitle']
+		SubTitle = request.form['TextBoxSubTitle']
+		Content = request.form['TextAreaContent']
+		PostImage = request.files['InputFieldImage']
+		PostTypeObject = PostType.objects(PostTypeDescription = "CSR").first()
+		# Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage,PostType = PostTypeObject).save()
+	path = current_app.root_path
+	return render_template('Admin/Posts/CSR.html',path = path)
 
 
 

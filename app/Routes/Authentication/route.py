@@ -1,5 +1,5 @@
 from flask import *
-from app.database.models import User,UserType
+from app.database.models import User,UserType,PostType
 from app import bcrypt
 from app import LoginManager
 from flask_login import login_user, current_user, logout_user, login_required
@@ -50,6 +50,9 @@ def register():
 		if CheckUserTypes < 1:
 			UserType(TypeDescription = "Admin",UserCreated = "Auto Generated!").save()
 			UserType(TypeDescription = "User",UserCreated = "Auto Generated!").save()
+			PostType(PostTypeDescription = "CSR",UserCreated = "Auto Generated!").save()
+			PostType(PostTypeDescription = "News",UserCreated = "Auto Generated!").save()
+			PostType(PostTypeDescription = "Awards",UserCreated = "Auto Generated!").save()
 			print("UserTypes Created!")
 		Username = request.form['Username']
 		Password = request.form['Password']

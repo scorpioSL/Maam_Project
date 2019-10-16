@@ -42,9 +42,10 @@ class UserLog(db.Document):
 
 class Post(db.Document):
 	PostTittle=db.StringField()
+	PostSubTitle = db.StringField()
 	PostContent=db.StringField()
 	PostImage=db.StringField()
-	PostTypeId=db.ReferenceField('PostType')
+	PostType=db.ReferenceField('PostType')
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
