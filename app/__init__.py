@@ -20,6 +20,8 @@ login_manager.login_message_category  = 'info'
 def load_user(user_id):
     return User.objects(pk=user_id).first()
 
+##Configurations for the server from a seperate file
+app.config.from_object(Config)
 
 from app.Routes.Authentication.route import admin
 from app.Routes.Website.route import website
@@ -36,8 +38,7 @@ app.register_blueprint(vacancy)
 app.register_blueprint(product)
 app.register_blueprint(request)
 
-##Configurations for the server from a seperate file
-app.config.from_object(Config)
+
 
 #<!-- ============================================================== -->
 
