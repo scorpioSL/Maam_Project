@@ -17,8 +17,48 @@ posts = Blueprint('Posts', __name__)
 # ------------------------------------------------------------------
 
 # ********************---Add New Awards---*********************
-@posts.route('/Add_Awards')
+@posts.route('/Add_Awards',methods = ['GET','POST'])
 def add_Awards():
+	if request.method == 'POST':
+		try:
+			Title = request.form['TextBoxTitle']
+			SubTitle = request.form['TextBoxSubTitle']
+			Content = request.form['TextAreaContent']
+
+			if Title == "" or SubTitle == "" or Content == "":
+				Message = "Title or Subtitle or Content cannot be empty!"
+				JsonResponse = {"Type":"Error","Message":Message}
+				return jsonify(JsonResponse)
+			PostImage = request.files['InputFieldImage']
+			path = None
+			# Uploading The Image
+			if PostImage.filename != '' and PostImage:
+				if PostImage.filename.rsplit('.',1)[1] in app.config['ALLOWED_EXTENSIONS']:
+					if not os.path.exists(current_app.root_path + app.config['IMAGES_FOLDER']):
+						os.mkdir(current_app.root_path + app.config['IMAGES_FOLDER'])
+					# Generating Unique ID For Image
+					ImageID = uuid.uuid4()
+					ImageID = str(ImageID)
+					ImageID = ImageID.rsplit('-',1)
+					ImageExt = PostImage.filename.rsplit('.',1)[1]
+					NewImageName = "Awards_" + ImageID[1] + '.' + ImageExt
+					PostImage.filename = NewImageName
+					filename = secure_filename(PostImage.filename)
+					PostImage.save(current_app.root_path + os.path.join(app.config['IMAGES_FOLDER'],filename))
+					path = app.config['IMAGES_PATH'] + filename
+			PostTypeObject = PostType.objects(PostTypeDescription = "Awards",Archived = False).first()
+			if not PostTypeObject:
+				Message = "Post type not found!"
+				JsonResponse = {"Type" : "Error","Message" : Message}
+				return jsonify(JsonResponse)
+			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject).save()
+			Message = "Successfully Posted!"
+			JsonResponse = {"Type" : "Success","Message" : Message}
+			return jsonify(JsonResponse)
+		except:
+			Message = "An error occured!"
+			JsonResponse = {"Type" : "Error","Message" : Message}
+			return jsonify(JsonResponse)
 	return render_template('Admin/Posts/Awards.html')
 
 
@@ -123,59 +163,46 @@ def add_News():
 # *********************************************
 @posts.route('/Awards',methods = ['GET','POST'])
 def awards():
-	if request.method == 'POST':
-		try:
-			Title = request.form['TextBoxTitle']
-			SubTitle = request.form['TextBoxSubTitle']
-			Content = request.form['TextAreaContent']
-
-			if Title == "" or SubTitle == "" or Content == "":
-				Message = "Title or Subtitle or Content cannot be empty!"
-				JsonResponse = {"Type":"Error","Message":Message}
-				return jsonify(JsonResponse)
-			PostImage = request.files['InputFieldImage']
-			path = None
-			# Uploading The Image
-			if PostImage.filename != '' and PostImage:
-				if PostImage.filename.rsplit('.',1)[1] in app.config['ALLOWED_EXTENSIONS']:
-					if not os.path.exists(current_app.root_path + app.config['IMAGES_FOLDER']):
-						os.mkdir(current_app.root_path + app.config['IMAGES_FOLDER'])
-					# Generating Unique ID For Image
-					ImageID = uuid.uuid4()
-					ImageID = str(ImageID)
-					ImageID = ImageID.rsplit('-',1)
-					ImageExt = PostImage.filename.rsplit('.',1)[1]
-					NewImageName = "Awards_" + ImageID[1] + '.' + ImageExt
-					PostImage.filename = NewImageName
-					filename = secure_filename(PostImage.filename)
-					PostImage.save(current_app.root_path + os.path.join(app.config['IMAGES_FOLDER'],filename))
-					path = app.config['IMAGES_PATH'] + filename
-			PostTypeObject = PostType.objects(PostTypeDescription = "Awards",Archived = False).first()
-			if not PostTypeObject:
-				Message = "Post type not found!"
-				JsonResponse = {"Type" : "Error","Message" : Message}
-				return jsonify(JsonResponse)
-			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject).save()
-			Message = "Successfully Posted!"
-			JsonResponse = {"Type" : "Success","Message" : Message}
-			return jsonify(JsonResponse)
-		except:
-			Message = "An error occured!"
-			JsonResponse = {"Type" : "Error","Message" : Message}
-			return jsonify(JsonResponse)
-	return render_template('website/AboutUs/Awards.html')
+	AwardsType = PostType.objects(PostTypeDescription = "Awards",Archived = False).first()
+	AllAwards = None
+	if AwardsType:
+		AllAwards = Post.objects(PostType = AwardsType,Archived = False).order_by('-_id')
+	return render_template('website/AboutUs/Awards.html',AllAwards = AllAwards)
 
 
 
 # *********************************************
 @posts.route('/CsrDisplay')
 def csrDisplay():
-	CSRType = PostType.objects(PostTypeDescription = "CSR").first()
-	AllCSR = Post.objects(PostType = CSRType,Archived = False).order_by('-_id')
+	CSRType = PostType.objects(PostTypeDescription = "CSR",Archived = False).first()
+	AllCSR = None
+	if CSRType:
+		AllCSR = Post.objects(PostType = CSRType,Archived = False).order_by('-_id')
 	return render_template('website/AboutUs/CsrDisplay.html',AllCSR = AllCSR)
 
 
 # *********************************************
 @posts.route('/NewsDisplay')
 def newsDisplay():
-	return render_template('website/AboutUs/News.html')
+	NewsType = PostType.objects(PostTypeDescription = "News",Archived = False).first()
+	AllNews = None
+	if NewsType:
+		AllNews = Post.objects(PostType = NewsType,Archived = False).order_by('-_id')
+	return render_template('website/AboutUs/News.html',AllNews = AllNews)
+
+
+@posts.route('/UniquePost/<PostID>',methods = ['GET'])
+def UnqiePost(PostID):
+	UniquePost = Post.objects.get(id = PostID)
+	if not UniquePost:
+		abort(404)
+	CSR = PostType.objects(PostTypeDescription = "CSR").first()
+	News = PostType.objects(PostTypeDescription = "News").first()
+	Awards = PostType.objects(PostTypeDescription = "Awards").first()
+	if not CSR or News or Awards:
+		abort(404)
+	if UnqiePost.PostType == CSR:
+		return render_template('website/AboutUs/CsrDisplay.html',AllCSR = UnqiePost)
+	elif UniquePost.PostType == News:
+		return render_template('website/AboutUs/News.html',AllNews = UniquePost)
+	return render_template('website/AboutUs/Awards.html',AllAwards = UniquePost) 
