@@ -5,80 +5,98 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style type="text/css">
-ul#horizontal-list li {
-  display: inline;
-}
+  ul#horizontal-list li {
+    display: inline;
+  }
 </style>
 
 
 <section class="page-section about-heading">
-  <div class="container">
+  <div id="PageBody" class="container">
     <div class="row">
-        <div class="col-md-9">
+      <div class="col-md-9">
 
-    <div class="about-heading-content mt-2">
-      <div class="row">
-        <div class="col-xl-8 col-lg-6 mx-auto">
-          <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
-            <h5 class="section-heading mb-2">
-              <span class="section-heading-lower">CSR Event Tittle</span>
-            </h5  >
-            <!-- subTittle -->
-            <p>gghfhgfg</p>
+        <div class="about-heading-content mt-2">
+          {% for CSR in AllCSR %}
+          <div class="row mb-4">
+            <div class="col-xl-8 col-lg-6 mx-auto">
+              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+                <h5 class="section-heading mb-2">
+                  <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                </h5>
+                <!-- subTittle -->
+                {% if CSR.PostSubTitle %}
+                <p>{{ CSR.PostSubTitle|upper }}</p>
+                {% endif %}
 
-            <hr>
-            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="http://www.ratnamani.com/images/inner_banner/csr.jpg" alt="">
-
-            <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum..</p>
+                <hr>
+                {% if CSR.PostImage %}
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
+                  src="{{ url_for('static',filename = CSR.PostImage) }}" alt="">
+                {% endif %}
+                <p class="mt-2">{{ CSR.PostContent }}</p>
+              </div>
+            </div>
           </div>
+          {% endfor %}
+          <!-- If No Post Found! -->
+          {% if not AllCSR %}
+          <div class="row mb-4">
+            <div class="col-xl-8 col-lg-6 mx-auto">
+              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+                <h5 class="section-heading mb-2">
+                  <span class="section-heading-lower">No Post Found!</span>
+                </h5>
+                <hr>
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS_BJ_ORp3B73HmJyS6qk-A0mGfuMC3UrI5n4FWCep3y5i4n5ZA"
+                  alt="">
+                <p class="mt-2">No Post Found!</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <!-- bottom nav -->
+          <div>
+            <div id="menu-outer" style="margin-top:10px">
+              <div class="table">
+                <ul id="horizontal-list">
+                  <li><a href="#">Company Overview <span>|</span></a></li>
+                  <li><a href="#">Vision & mission <span>|</span></a></li>
+                  <li><a href="#">Heritage <span>|</span></a></li>
+                  <li><a href="#">CSR <span>|</span></a></li>
+                  <li><a href="#">News <span>|</span></a></li>
+                  <li><a href="#">Awards</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- bottom nav -->
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xl-8 col-lg-6 mx-auto mt-2">
-          <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
-            <h5 class="section-heading mb-2">
-              <span class="section-heading-lower "> Second Heading of the news</span>
-            </h5>
-            <hr>
-            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS_BJ_ORp3B73HmJyS6qk-A0mGfuMC3UrI5n4FWCep3y5i4n5ZA" alt="">
-
-            <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum..</p>
-          </div>
+      <div class="col-md-3">
+        <div class="list-group mt-2">
+          <li class="list-group-item active text-center" style="background-color:#0f2b72;">News</li>
+          <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+          <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+          <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
         </div>
       </div>
-      <!-- bottom nav -->
-      <div>
-        <div id="menu-outer" style="margin-top:10px">
-          <div class="table">
-            <ul id="horizontal-list">
-              <li><a href="#">Company Overview <span>|</span></a></li>
-              <li><a href="#">Vision & mission <span>|</span></a></li>
-              <li><a href="#">Heritage <span>|</span></a></li>
-              <li><a href="#">CSR <span>|</span></a></li>
-              <li><a href="#">News <span>|</span></a></li>
-              <li><a href="#">Awards</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- bottom nav -->
     </div>
-  </div>
-
-  <div class="col-md-3">
-          <div class="list-group mt-2">
-              <li class="list-group-item active text-center" style="background-color:#0f2b72;">News</li>
-              <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-              <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-          </div>
-    </div>
-  </div>
   </div>
 </section>
 
+
+<script>
+  function startRefresh() {
+    $.get('', function (data) {
+      $(document.body).html(data);
+    });
+  }
+  $(function () {
+    setTimeout(startRefresh, 10000);
+  });
+</script>
+
 {% endblock content %}
-
-
-

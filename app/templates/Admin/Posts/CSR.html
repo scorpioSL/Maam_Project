@@ -63,10 +63,12 @@
                 success: function (data) {
                     $("form").trigger("reset");
                     if (data.Type == "Success") {
-                        $('#AlertPlace').notify(
-                            data.Message, 'success',
-                            { position: "bottom center" }
-                        );
+                        
+                        alertify.success(data.Message);
+                    }
+                    else
+                    {
+                        alertify.error('Error message');
                     }
                 },
                 cache: false,

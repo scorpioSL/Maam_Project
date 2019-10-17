@@ -15,20 +15,16 @@
         <link href="{{url_for('static',filename='assets/libs/flot/css/float-chart.css')}}" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="{{url_for('static',filename='dist/css/style.min.css')}}" rel="stylesheet">
-         <!-- ConfirmJS CSS File -->
-        <link rel="stylesheet" href="{{url_for('static',filename = 'css/ConfirmJS/jquery-confirm.css')}}">
-        <!-- Notify CSS -->
-        <link rel="stylesheet" href="{{url_for('static',filename = 'css/Notify/notify-metro.css')}}">
+        <!-- Alertify CSS -->
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css/Alertify/alertify.min.css')}}">
         <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="{{url_for('static',filename='assets/libs/jquery/dist/jquery.min.js')}}"></script>
-    <!-- ConfirmJS JS File -->
-   <script src="{{ url_for('static',filename='js/ConfirmJS/jquery-confirm.js') }}"></script>
    <!-- Global Customize JS Methods File -->
    <script src="{{ url_for('static',filename='js/GlobalJS/Global.js') }}"></script>
-   <!-- Notify JS For Alerts -->
-    <script src="{{ url_for('static',filename='js/NotifyJS/notify.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='js/NotifyJS/notify-metro.js') }}"></script>
+   <!-- Alertify JS For Alerts -->
+    <script src="{{ url_for('static',filename='js/Alertify/alertify.min.js') }}"></script>
+    
    <!-- Bootstrap tether Core JavaScript -->
    <script src="{{url_for('static',filename='assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
    <script src="{{url_for('static',filename='assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -52,6 +48,11 @@
    <script src="{{url_for('static',filename='assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
    <script src="{{url_for('static',filename='dist/js/pages/chart/chart-page-init.js') }}"></script>
 
+    <script>
+        // Alertify Default Settings
+        alertify.set('notifier','delay', 7);
+        alertify.set('notifier','position', 'top-right');
+    </script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

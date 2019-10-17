@@ -10,5 +10,6 @@ class Config():
 	MAIL_USERNAME = os.environ.get('EMAIL_USER')
 	MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
 	IMAGES_FOLDER = "/static/Images/"
+	IMAGES_PATH = "Images/"
 	ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 	TESTING = True
