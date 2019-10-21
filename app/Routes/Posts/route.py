@@ -193,16 +193,20 @@ def newsDisplay():
 
 @posts.route('/UniquePost/<PostID>',methods = ['GET'])
 def UnqiePost(PostID):
-	UniquePost = Post.objects.get(id = PostID)
+	UniquePost = Post.objects(id = PostID).first()
 	if not UniquePost:
 		abort(404)
 	CSR = PostType.objects(PostTypeDescription = "CSR").first()
 	News = PostType.objects(PostTypeDescription = "News").first()
 	Awards = PostType.objects(PostTypeDescription = "Awards").first()
-	if not CSR or News or Awards:
+	if not CSR or not News or not Awards:
 		abort(404)
-	if UnqiePost.PostType == CSR:
-		return render_template('website/AboutUs/CsrDisplay.html',AllCSR = UnqiePost)
+	if UniquePost.PostType == CSR:
+		Allcsr = [UniquePost]
+		return render_template('website/AboutUs/CsrDisplay.html',AllCSR = Allcsr)
 	elif UniquePost.PostType == News:
-		return render_template('website/AboutUs/News.html',AllNews = UniquePost)
-	return render_template('website/AboutUs/Awards.html',AllAwards = UniquePost) 
+		AllNews = [UniquePost]
+		return render_template('website/AboutUs/News.html',AllNews = AllNews)
+	else:
+		AllAwards = [UniquePost]
+		return render_template('website/AboutUs/Awards.html',AllAwards = AllAwards) 
