@@ -37,6 +37,7 @@ app.register_blueprint(posts)
 app.register_blueprint(vacancy)
 app.register_blueprint(product)
 app.register_blueprint(request)
+app.register_blueprint(feedback)
 
 
 
