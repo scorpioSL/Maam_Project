@@ -1,6 +1,7 @@
 from flask import *
 from app import app
 from werkzeug.utils import secure_filename
+from flask_login import current_user,login_required
 
 # Python Imports
 import datetime
@@ -18,6 +19,7 @@ posts = Blueprint('Posts', __name__)
 
 # ********************---Add New Awards---*********************
 @posts.route('/Add_Awards',methods = ['GET','POST'])
+@login_required
 def add_Awards():
 	if request.method == 'POST':
 		try:
@@ -51,7 +53,7 @@ def add_Awards():
 				Message = "Post type not found!"
 				JsonResponse = {"Type" : "Error","Message" : Message}
 				return jsonify(JsonResponse)
-			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject).save()
+			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject,UserCreated = current_user.UserName).save()
 			Message = "Successfully Posted!"
 			JsonResponse = {"Type" : "Success","Message" : Message}
 			return jsonify(JsonResponse)
@@ -64,6 +66,7 @@ def add_Awards():
 
 # *******************---Add New Csr Events---******************
 @posts.route('/Add_Csr', methods=['GET', 'POST'])
+@login_required
 def add_Csr():
 	if request.method == 'POST':
 		try:
@@ -97,7 +100,7 @@ def add_Csr():
 				Message = "Post type not found!"
 				JsonResponse = {"Type" : "Error","Message" : Message}
 				return jsonify(JsonResponse)
-			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject).save()
+			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject,UserCreated = current_user.UserName).save()
 			Message = "Successfully Posted!"
 			JsonResponse = {"Type" : "Success","Message" : Message}
 			return jsonify(JsonResponse)
@@ -111,6 +114,7 @@ def add_Csr():
 
 # ******************---Add News---*******************************
 @posts.route('/Add_News',methods = ['GET','POST'])
+@login_required
 def add_News():
 	if request.method == 'POST':
 		try:
@@ -144,7 +148,7 @@ def add_News():
 				Message = "Post type not found!"
 				JsonResponse = {"Type" : "Error","Message" : Message}
 				return jsonify(JsonResponse)
-			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject).save()
+			Post(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,PostImage = path,PostType = PostTypeObject,UserCreated = current_user.UserName).save()
 			Message = "Successfully Posted!"
 			JsonResponse = {"Type" : "Success","Message" : Message}
 			return jsonify(JsonResponse)
@@ -167,7 +171,7 @@ def awards():
 	AllAwards = None
 	if AwardsType:
 		AllAwards = Post.objects(PostType = AwardsType,Archived = False).order_by('-_id')
-	return render_template('website/AboutUs/Awards.html',AllAwards = AllAwards)
+	return render_template('website/AboutUs/Awards.html',AllAwards = AllAwards,alert = 'No')
 
 
 
@@ -191,18 +195,28 @@ def newsDisplay():
 	return render_template('website/AboutUs/News.html',AllNews = AllNews)
 
 
-@posts.route('/UniquePost/<PostID>',methods = ['GET'])
-def UnqiePost(PostID):
-	UniquePost = Post.objects.get(id = PostID)
+@posts.route('/UniquePost/<PostID>',methods = ['GET','POST'])
+def UniquePost(PostID):
+	UniquePost = Post.objects(id = PostID,Archived = False).first()
 	if not UniquePost:
 		abort(404)
 	CSR = PostType.objects(PostTypeDescription = "CSR").first()
 	News = PostType.objects(PostTypeDescription = "News").first()
 	Awards = PostType.objects(PostTypeDescription = "Awards").first()
-	if not CSR or News or Awards:
+	if not CSR or not News or not Awards:
 		abort(404)
-	if UnqiePost.PostType == CSR:
-		return render_template('website/AboutUs/CsrDisplay.html',AllCSR = UnqiePost)
+	if UniquePost.PostType == CSR:
+		Allcsr = [UniquePost]
+		return render_template('website/AboutUs/CsrDisplay.html',AllCSR = Allcsr)
 	elif UniquePost.PostType == News:
-		return render_template('website/AboutUs/News.html',AllNews = UniquePost)
-	return render_template('website/AboutUs/Awards.html',AllAwards = UniquePost) 
+		AllNews = [UniquePost]
+		return render_template('website/AboutUs/News.html',AllNews = AllNews)
+	else:
+		AllAwards = [UniquePost]
+		return render_template('website/AboutUs/Awards.html',AllAwards = AllAwards)
+
+@posts.route('/delete_post/<PostID>/<currentURL>',methods = ['GET','POST'])
+@login_required
+def DeletePost(PostID,currentURL):
+	Post.objects(id = PostID).first().update(set__Archived = True)
+	return redirect(url_for(currentURL,alert = 'Yes'))

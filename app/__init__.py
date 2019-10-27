@@ -12,7 +12,7 @@ bcrypt = Bcrypt(app)
 
 # Login Manager Object
 login_manager = LoginManager(app)
-login_manager.login_view = 'User.login'
+login_manager.login_view = 'Authentication.login'
 login_manager.login_message_category  = 'info'
 
 # User Loader For Login Operation

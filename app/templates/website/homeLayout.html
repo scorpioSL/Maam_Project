@@ -40,6 +40,18 @@
 <script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.min.js') }}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{{url_for('static',filename='js/mdb.min.js') }}"></script>
+<!-- Alertify CSS -->
+<link rel="stylesheet" href="{{url_for('static',filename = 'css/Alertify/alertify.min.css')}}">
+<!-- Alertify JS For Alerts -->
+<script src="{{ url_for('static',filename='js/Alertify/alertify.min.js') }}"></script>
+<!-- Global JS -->
+<script src="{{ url_for('static',filename='js/GlobalJS/Global.js') }}"></script>
+
+<script>
+    // Alertify Default Settings
+    alertify.set('notifier','delay', 7);
+    alertify.set('notifier','position', 'top-right');
+</script>
 
 </head>
 

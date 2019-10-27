@@ -138,6 +138,14 @@
                 {
                     if(result.Type == 'Success')
                     {
+                        //If user is redirected by login required to the login page then redirecting to the user requested url after successfull login
+                        let searchParams = new URLSearchParams(window.location.search)
+                        if(searchParams.has('next'))
+                        {
+                            let param = searchParams.get('next')
+                            openWindow(param);
+                            return;
+                        }
                         openWindow('/dashboard');
                         return;
                     }
