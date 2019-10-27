@@ -7,7 +7,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title" id="HeaderText">Post CSR Events</h4>
+                <h4 class="page-title" id="HeaderText">{{ TitleOfPage }}</h4>
             </div>
         </div>
     </div>
@@ -50,31 +50,75 @@
     </div>
 
     <script>
+        // Edit Csr Block
+        var Obj = {};
+        $(document).ready(function () {
+            Obj = '{{ PostObj|tojson }}';
+            if (Obj != {}) {
+                Obj = JSON.parse(Obj);
+                $('#TextBoxTitle').val(Obj.Title);
+                $('#TextBoxSubTitle').val(Obj.SubTitle);
+                $('#TextAreaContent').val(Obj.Content);
+            }
+        });
+
+
+
+
         // Sending The Whole Form Together Because Of File Uploading
         $("#AddCsrPost").submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
 
-            $.ajax({
-                url: '/Add_Csr',
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
-                    $("form").trigger("reset");
-                    if (data.Type == "Success") {
-                        
-                        alertify.success(data.Message);
-                    }
-                    else
+            var location = window.location.href.substr(7).split('/')[1]
+            if (location != 'Edit_CSR') {
+                $.ajax({
+                    url: '/Add_Csr',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        $("form").trigger("reset");
+                        if (data.Type == "Success") {
+
+                            alertify.success(data.Message);
+                        }
+                        else {
+                            alertify.error('Error message');
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+            else{
+                $.ajax({
+                    url: '/Edit_CSR/'+Obj.id +'/'+ Obj.URL,
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        $("form").trigger("reset");
+                        if (data.Type == "Success") {
+
+                            alertify.success(data.Message);
+                        }
+                        else {
+                            alertify.error('Error message');
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    error:function(xhr,errorThrown)
                     {
-                        alertify.error('Error message');
+                        console.log(xhr,errorThrown);
                     }
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
+                });
+            }
+
+
         });
     </script>
 
