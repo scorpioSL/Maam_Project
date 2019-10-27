@@ -15,10 +15,10 @@ def companyOverview():
 	return render_template('website/AboutUs/CompanyOverview.html')
 
 
-# *********************************************
-@website.route('/ContactUs')
-def contactUs():
-	return render_template('website/ContactUs.html')
+# # *********************************************
+# @website.route('/ContactUs')
+# def contactUs():
+# 	return render_template('website/ContactUs.html')
 
 
 # *********************************************

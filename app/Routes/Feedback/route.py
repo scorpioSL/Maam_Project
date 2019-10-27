@@ -21,3 +21,6 @@ def view_Inquries():
 # ------------------------------------------------------------------
 						# WEBSITE FUNCTIONS
 # ------------------------------------------------------------------
+@feedback.route('/ContactUs')
+def ContactUs():
+	return render_template('website/ContactUs.html')
