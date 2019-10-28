@@ -19,6 +19,8 @@
         <div class="about-heading-content mt-2">
           {% for CSR in AllCSR %}
           {% if current_user.UserType.TypeDescription == 'Admin' %}
+          {% if request.endpoint == 'Posts.UniquePost' %}
+          <!-- Delete or Edit Part are only showing in Uniquer Post route -->
           <div class="alert alert-success" role="alert">
             <a href="{{ url_for('Posts.edit_Csr',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
               <button class="btn btn-warning">Edit</button>
@@ -28,11 +30,14 @@
             </a>
           </div>
           {% endif %}
+          {% endif %}
           <div class="row mb-4">
             <div class="col-xl-8 col-lg-6 mx-auto">
               <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
                 <h5 class="section-heading mb-2">
-                  <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                  <a href="{{ url_for('Posts.UniquePost',PostID = CSR.id) }}">
+                    <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                  </a>
                 </h5>
                 <!-- subTittle -->
                 {% if CSR.PostSubTitle %}

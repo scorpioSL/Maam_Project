@@ -41,6 +41,13 @@
                 <label for="exampleFormControlFile1">Image</label>
                 <input type="file" class="form-control-file" id="InputFieldImage" name="InputFieldImage"
                     style="border-color: black">
+
+
+            </div>
+            <div id="DeleteImageDiv" hidden="" class="mt-3 form-group">
+                <label for="exampleFormControlFile1">Delete Current Image</label><br>
+                <input type="checkbox" class="form-control-file text-left" id="CheckboxDeleteCurrentImage"
+                    name="CheckboxDeleteCurrentImage" style="border-color: black">
             </div>
 
             <button type="submit" class="btn btn-dark mt-2">Submit</button>
@@ -52,13 +59,20 @@
     <script>
         // Edit Csr Block
         var Obj = {};
+        
         $(document).ready(function () {
-            Obj = '{{ PostObj|tojson }}';
-            if (Obj != {}) {
-                Obj = JSON.parse(Obj);
-                $('#TextBoxTitle').val(Obj.Title);
-                $('#TextBoxSubTitle').val(Obj.SubTitle);
-                $('#TextAreaContent').val(Obj.Content);
+            var location = window.location.href.substr(7).split('/')[1]
+            if (location == 'Edit_CSR') {
+                '{% if PostObj %}'
+                Obj = '{{ PostObj|tojson }}';
+                if (Obj != {}) {
+                    Obj = JSON.parse(Obj);
+                    $('#TextBoxTitle').val(Obj.Title);
+                    $('#TextBoxSubTitle').val(Obj.SubTitle);
+                    $('#TextAreaContent').val(Obj.Content);
+                    $('#DeleteImageDiv').removeAttr('hidden');
+                }
+                '{% endif %}'
             }
         });
 
@@ -92,9 +106,9 @@
                     processData: false
                 });
             }
-            else{
+            else {
                 $.ajax({
-                    url: '/Edit_CSR/'+Obj.id +'/'+ Obj.URL,
+                    url: '/Edit_CSR/' + Obj.id + '/' + Obj.URL,
                     type: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -111,9 +125,8 @@
                     cache: false,
                     contentType: false,
                     processData: false,
-                    error:function(xhr,errorThrown)
-                    {
-                        console.log(xhr,errorThrown);
+                    error: function (xhr, errorThrown) {
+                        console.log(xhr, errorThrown);
                     }
                 });
             }

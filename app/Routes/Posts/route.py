@@ -111,20 +111,28 @@ def add_Csr():
 			return jsonify(JsonResponse)
 	return render_template('Admin/Posts/CSR.html',TitleOfPage = TitleOfPage)
 
+# Editing All The Posts(Types) In One Route
 @posts.route('/Edit_CSR/<PostID>/<currentURL>',methods = ['GET','POST'])
 def edit_Csr(PostID,currentURL):
+	# Form Displaying Title Name
 	TitleOfPage = 'Edit CSR'
+	# Submiting From The Form request method will be post
 	if request.method == 'POST':
 		try:
 			Title = request.form['TextBoxTitle']
 			SubTitle = request.form['TextBoxSubTitle']
 			Content = request.form['TextAreaContent']
+			PostImage = request.files['InputFieldImage']
+			# A Checkbox which will show in editing Post only. If its checked the PostImage attribute in MongoDB document have to remove
+			DeleteImage = request.form.get('CheckboxDeleteCurrentImage')
 
-			if Title == "" or SubTitle == "" or Content == "":
+			# Validation of required fields
+			if Title == "" or Content == "":
 				Message = "Title or Subtitle or Content cannot be empty!"
 				JsonResponse = {"Type":"Error","Message":Message}
 				return jsonify(JsonResponse)
-			PostImage = request.files['InputFieldImage']
+			
+			# A varibale to detemine image path
 			path = None
 			# Uploading The Image
 			if PostImage.filename != '' and PostImage:
@@ -139,21 +147,37 @@ def edit_Csr(PostID,currentURL):
 					NewImageName = "CSR_" + ImageID[1] + '.' + ImageExt
 					PostImage.filename = NewImageName
 					filename = secure_filename(PostImage.filename)
+					# Saving the image
 					PostImage.save(current_app.root_path + os.path.join(app.config['IMAGES_FOLDER'],filename))
 					path =  app.config['IMAGES_PATH'] + filename
-					Post(id = PostID).update(set__PostTittle = Title,set__PostSubTitle = SubTitle,set__PostContent = Content,set__PostImage = path,set__UserCreated = current_user.UserName,set__DateLastmodified = str(datetime.datetime.now()))
+					# Updating the database
+					Post(id = PostID).update(set__PostTittle = Title,set__PostSubTitle = SubTitle,set__PostContent = Content,set__PostImage = path,set__UserModified = current_user.UserName,set__DateLastmodified = str(datetime.datetime.now()))
+					# Returning responose to ajax request
 					Message = "Successfully Updated!"
 					JsonResponse = {"Type" : "Success","Message" : Message}
 					return jsonify(JsonResponse)
-			Post(id = PostID).update(PostTittle = Title,PostSubTitle = SubTitle,PostContent = Content,UserCreated = current_user.UserName,set__DateLastmodified = str(datetime.datetime.now()))
+			# If delete image checkbox is checked then DeleteImage variable will have a value else it will be None
+			if DeleteImage:
+				# Removing the PostImage attribute from Document as well as updating other data fields
+				Post(id = PostID).update(set__PostTittle = Title,set__PostSubTitle = SubTitle,set__PostContent = Content,set__UserModified = current_user.UserName,set__DateLastmodified = str(datetime.datetime.now()),unset__PostImage = True)
+				# Returning responose to ajax request
+				Message = "Successfully Updated!"
+				JsonResponse = {"Type" : "Success","Message" : Message}
+				return jsonify(JsonResponse)
+			# If DeleteImage doesn't have a value and neither the user didn't choose a new image then PostImage attribute doesn't need to update
+			Post(id = PostID).update(set__PostTittle = Title,set__PostSubTitle = SubTitle,set__PostContent = Content,set__UserModified = current_user.UserName,set__DateLastmodified = str(datetime.datetime.now()))
+			# Returning responose to ajax request
 			Message = "Successfully Updated!"
 			JsonResponse = {"Type" : "Success","Message" : Message}
 			return jsonify(JsonResponse)
 		except:
+			# Exception returning
 			Message = "An error occured!"
 			JsonResponse = {"Type" : "Error","Message" : Message}
 			return jsonify(JsonResponse)
+	# Returning the object to the html to edit(When page is loading to edit/GET request)
 	PostObj = Post.objects(id = PostID).first()
+	# Creating a json object to return data since MongoDB document cannot convert to JSON(id field*)
 	Obj = {'Title' : PostObj.PostTittle,'SubTitle':PostObj.PostSubTitle,'Content':PostObj.PostContent,'id':PostID,'URL':currentURL}
 	return render_template('Admin/Posts/CSR.html',TitleOfPage = TitleOfPage,PostObj = Obj)
 
