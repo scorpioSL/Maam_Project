@@ -22,7 +22,7 @@
           {% if request.endpoint == 'Posts.UniquePost' %}
           <!-- Delete or Edit Part are only showing in Uniquer Post route -->
           <div class="alert alert-success" role="alert">
-            <a href="{{ url_for('Posts.edit_Csr',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
+            <a href="{{ url_for('Posts.edit_Post',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
               <button class="btn btn-warning">Edit</button>
             </a>
             <a href="{{ url_for('Posts.DeletePost',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">

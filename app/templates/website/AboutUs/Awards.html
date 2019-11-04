@@ -16,11 +16,16 @@
         <div class="col-xl-8 col-lg-6 mx-auto mt-2">
           <!-- Change the css as you want. I just put the css -->
           {% if current_user.UserType.TypeDescription == 'Admin' %}
+          {% if request.endpoint == 'Posts.UniquePost' %}
           <div class="alert alert-success" role="alert">
             <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
               <button class="btn btn-danger">Delete</button>
             </a>
+            <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
+              <button class="btn btn-warning">Edit</button>
+            </a>
           </div>
+          {% endif %}
           {% endif %}
           <!-- end of delete box -->
           <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
@@ -44,11 +49,16 @@
         <div class="col-xl-8 col-lg-6 mx-auto mt-2">
           <!-- Change the css as you want. I just put the css -->
           {% if current_user.UserType.TypeDescription == 'Admin' %}
+          {% if request.endpoint == 'Posts.UniquePost' %}
           <div class="alert alert-success" role="alert">
             <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
               <button class="btn btn-danger">Delete</button>
             </a>
+            <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
+              <button class="btn btn-warning">Edit</button>
+            </a>
           </div>
+          {% endif %}
           {% endif %}
           <!-- end of delete box -->
           <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
@@ -59,7 +69,7 @@
             </h5>
             <!-- subTittle -->
             {% if award.PostSubTitle %}
-            <p>gghfhgfg</p>
+            <p>{{ award.PostSubTitle }}</p>
             {% endif %}
             <hr>
             <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"

@@ -112,10 +112,16 @@ def add_Csr():
 	return render_template('Admin/Posts/CSR.html',TitleOfPage = TitleOfPage)
 
 # Editing All The Posts(Types) In One Route
-@posts.route('/Edit_CSR/<PostID>/<currentURL>',methods = ['GET','POST'])
-def edit_Csr(PostID,currentURL):
+@posts.route('/Edit_POST/<PostID>/<currentURL>',methods = ['GET','POST'])
+def edit_Post(PostID,currentURL):
 	# Form Displaying Title Name
-	TitleOfPage = 'Edit CSR'
+	PostTypeCheck = Post.objects(id = PostID).first()
+	if PostTypeCheck and PostTypeCheck.PostType.PostTypeDescription == 'CSR':
+		TitleOfPage = 'Edit CSR'
+	elif PostTypeCheck and PostTypeCheck.PostType.PostTypeDescription == 'News':
+		TitleOfPage = 'Edit News'
+	else:
+		TitleOfPage = 'Edit Awards'
 	# Submiting From The Form request method will be post
 	if request.method == 'POST':
 		try:

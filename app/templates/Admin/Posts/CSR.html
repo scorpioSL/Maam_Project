@@ -62,7 +62,7 @@
         
         $(document).ready(function () {
             var location = window.location.href.substr(7).split('/')[1]
-            if (location == 'Edit_CSR') {
+            if (location == 'Edit_POST') {
                 '{% if PostObj %}'
                 Obj = '{{ PostObj|tojson }}';
                 if (Obj != {}) {
@@ -85,7 +85,7 @@
             var formData = new FormData(this);
 
             var location = window.location.href.substr(7).split('/')[1]
-            if (location != 'Edit_CSR') {
+            if (location != 'Edit_POST') {
                 $.ajax({
                     url: '/Add_Csr',
                     type: 'POST',
@@ -108,7 +108,7 @@
             }
             else {
                 $.ajax({
-                    url: '/Edit_CSR/' + Obj.id + '/' + Obj.URL,
+                    url: '/Edit_POST/' + Obj.id + '/' + Obj.URL,
                     type: 'POST',
                     data: formData,
                     dataType: 'json',
