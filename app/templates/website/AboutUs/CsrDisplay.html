@@ -21,11 +21,26 @@
 
         <div class="about-heading-content mt-2">
           {% for CSR in AllCSR %}
+          {% if current_user.UserType.TypeDescription == 'Admin' %}
+          {% if request.endpoint == 'Posts.UniquePost' %}
+          <!-- Delete or Edit Part are only showing in Uniquer Post route -->
+          <div class="alert alert-success" role="alert">
+            <a href="{{ url_for('Posts.edit_Post',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
+              <button class="btn btn-warning">Edit</button>
+            </a>
+            <a href="{{ url_for('Posts.DeletePost',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
+              <button class="btn btn-danger">Delete</button>
+            </a>
+          </div>
+          {% endif %}
+          {% endif %}
           <div class="row mb-4">
             <div class="col-xl-10 col-lg-10 mx-auto">
               <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
                 <h5 class="section-heading mb-2">
-                  <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                  <a href="{{ url_for('Posts.UniquePost',PostID = CSR.id) }}">
+                    <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                  </a>
                 </h5>
                 <!-- subTittle -->
                 {% if CSR.PostSubTitle %}
@@ -45,7 +60,7 @@
             </div>
           </div>
           {% endfor %}
-          
+
           <!-- If No Post Found! -->
           {% if not AllCSR %}
           <div class="row mb-4">
@@ -104,6 +119,34 @@
   $(function () {
     setTimeout(startRefresh, 10000);
   });
+
+  $(document).ready(function () {
+    let searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.has('alert')) {
+      let param = searchParams.get('alert')
+      if (param == "Yes") {
+
+        alertify.error("Success");
+        var oldURL = window.location.href;
+        var index = 0;
+        var newURL = oldURL;
+        index = oldURL.indexOf('?');
+        if (index == -1) {
+          index = oldURL.indexOf('#');
+        }
+        if (index != -1) {
+          newURL = oldURL.substring(0, index);
+        }
+
+        setTimeout(function () {
+          window.open(newURL, '_self')
+        }, 8000);
+
+
+      }
+    }
+  });
+
 </script>
 
 {% endblock content %}

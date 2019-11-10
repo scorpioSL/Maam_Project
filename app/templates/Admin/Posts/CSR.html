@@ -7,7 +7,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title" id="HeaderText">Post CSR Events</h4>
+                <h4 class="page-title" id="HeaderText">{{ TitleOfPage }}</h4>
             </div>
         </div>
     </div>
@@ -41,6 +41,13 @@
                 <label for="exampleFormControlFile1">Image</label>
                 <input type="file" class="form-control-file" id="InputFieldImage" name="InputFieldImage"
                     style="border-color: black">
+
+
+            </div>
+            <div id="DeleteImageDiv" hidden="" class="mt-3 form-group">
+                <label for="exampleFormControlFile1">Delete Current Image</label><br>
+                <input type="checkbox" class="form-control-file text-left" id="CheckboxDeleteCurrentImage"
+                    name="CheckboxDeleteCurrentImage" style="border-color: black">
             </div>
 
             <button type="submit" class="btn btn-dark mt-2">Submit</button>
@@ -50,31 +57,81 @@
     </div>
 
     <script>
+        // Edit Csr Block
+        var Obj = {};
+        
+        $(document).ready(function () {
+            var location = window.location.href.substr(7).split('/')[1]
+            if (location == 'Edit_POST') {
+                '{% if PostObj %}'
+                Obj = '{{ PostObj|tojson }}';
+                if (Obj != {}) {
+                    Obj = JSON.parse(Obj);
+                    $('#TextBoxTitle').val(Obj.Title);
+                    $('#TextBoxSubTitle').val(Obj.SubTitle);
+                    $('#TextAreaContent').val(Obj.Content);
+                    $('#DeleteImageDiv').removeAttr('hidden');
+                }
+                '{% endif %}'
+            }
+        });
+
+
+
+
         // Sending The Whole Form Together Because Of File Uploading
         $("#AddCsrPost").submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
 
-            $.ajax({
-                url: '/Add_Csr',
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
-                    $("form").trigger("reset");
-                    if (data.Type == "Success") {
-                        
-                        alertify.success(data.Message);
+            var location = window.location.href.substr(7).split('/')[1]
+            if (location != 'Edit_POST') {
+                $.ajax({
+                    url: '/Add_Csr',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        $("form").trigger("reset");
+                        if (data.Type == "Success") {
+
+                            alertify.success(data.Message);
+                        }
+                        else {
+                            alertify.error('Error message');
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/Edit_POST/' + Obj.id + '/' + Obj.URL,
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        $("form").trigger("reset");
+                        if (data.Type == "Success") {
+
+                            alertify.success(data.Message);
+                        }
+                        else {
+                            alertify.error('Error message');
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    error: function (xhr, errorThrown) {
+                        console.log(xhr, errorThrown);
                     }
-                    else
-                    {
-                        alertify.error('Error message');
-                    }
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
+                });
+            }
+
+
         });
     </script>
 

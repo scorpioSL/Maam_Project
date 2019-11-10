@@ -19,12 +19,27 @@
       <div class="col-md-9">
         <div class="about-heading-content mt-2">
           {% for News in AllNews %}
+          <!-- Change the css as you want. I just put the css -->
+          {% if current_user.UserType.TypeDescription == 'Admin' %}
+          {% if request.endpoint == 'Posts.UniquePost' %}
+          <div class="alert alert-success" role="alert">
+            <a href="{{ url_for('Posts.DeletePost',PostID = News.id,currentURL = 'Posts.newsDisplay') }}">
+              <button class="btn btn-danger">Delete</button>
+            </a>
+            <a href="{{ url_for('Posts.edit_Post',PostID = News.id,currentURL = 'Posts.newsDisplay') }}">
+              <button class="btn btn-warning">Edit</button>
+            </a>
+          </div>
+          {% endif %}
+          {% endif %}
           {% if not News.PostImage %}
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-10 mx-auto">
               <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
                 <h5 class="section-heading mb-2">
-                  <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                  <a href="{{ url_for('Posts.UniquePost',PostID = News.id) }}">
+                    <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                  </a>
                 </h5>
                 <!-- subTittle -->
                 {% if News.PostSubTitle %}
@@ -40,7 +55,9 @@
             <div class="col-xl-10 col-lg-10 mx-auto mt-2">
               <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
                 <h5 class="section-heading mb-2">
-                  <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                  <a href="{{ url_for('Posts.UniquePost',PostID = News.id) }}">
+                    <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                  </a>
                 </h5>
                 <hr>
                 <!-- subTittle -->
@@ -48,8 +65,7 @@
                 <p>{{ News.PostSubTitle }}</p>
                 {% endif %}
                 <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
-                  src="{{ url_for('static',filename = News.PostImage) }}"
-                  alt="">
+                  src="{{ url_for('static',filename = News.PostImage) }}" alt="">
                 <p class="mt-2">{{ News.PostContent }}</p>
               </div>
               <div>
@@ -95,15 +111,15 @@
 
 
 <script>
-    function startRefresh() {
-      $.get('', function (data) {
-        $(document.body).html(data);
-      });
-    }
-    $(function () {
-      setTimeout(startRefresh, 10000);
+  function startRefresh() {
+    $.get('', function (data) {
+      $(document.body).html(data);
     });
-  </script>
+  }
+  $(function () {
+    setTimeout(startRefresh, 10000);
+  });
+</script>
 
 
 {% endblock content %}
