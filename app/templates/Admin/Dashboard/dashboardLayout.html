@@ -143,9 +143,11 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-right">
 
-
+                            {% if current_user.is_authenticated %}
                         <li class="nav-item" id="AlertPlace" style="color: white"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"></a>
-                            Login : <span>Shaheekanaleem@gmail.com</span>
+                            Login : <span>{{current_user.UserName}}</span>
+                            {% else %}
+                            {% endif %}
                         </li>
                         <!-- ============================================================== -->
                         <!-- Notification -->
@@ -173,9 +175,7 @@
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i>Login </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                <a class="dropdown-item" href="{{url_for('Authentication.logout')}}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
 
                             </div>
                         </li>

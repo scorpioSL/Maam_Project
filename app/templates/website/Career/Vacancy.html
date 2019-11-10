@@ -38,17 +38,17 @@
                 
 
               </div>
+              <div>
+                  <p style="font-size: small; color: #8e8080;">POST ON <span style="color: red;">24.11.2019</span> </p>
+                </div>
                <!-- bottom nav -->
     <div>
             <div id="menu-outer" style="margin-top:10px">
       <div class="table">
         <ul id="horizontal-list">
-          <li><a href="#">Career Overview <span>|</span></a></li>
-          <li><a href="#">Vacancies<span>|</span></a></li>
-          <li><a href="#">  Why join with <span>|</span></a></li>
-          <li><a href="#">Life At Maam <span>|</span></a></li>
-          <li><a href="#">Rewards & Recognitions</a></li>
-         
+            <li><a href="#" href="{{url_for('Vacancy.view_Career')}}">Career Overview <span>|</span></a></li>
+            <li><a href="{{url_for('Vacancy.view_Vacancy')}}">Vacancy <span>|</span></a></li>
+            <li><a href="{{url_for('Vacancy.job_Application')}}">Job Application </a></li>
         </ul>
       </div>
     </div>

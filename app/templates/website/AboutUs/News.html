@@ -7,6 +7,9 @@
   ul#horizontal-list li {
     display: inline;
   }
+  .list-group-item {
+  color: #1d809f;
+}
 </style>
 
 
@@ -49,6 +52,9 @@
                   alt="">
                 <p class="mt-2">{{ News.PostContent }}</p>
               </div>
+              <div>
+                <p style="font-size:10px; color: #8e8080;" class="mt-2">POST ON <span style="color: red;">{{News.DateCreated}}</span> </p>
+              </div>
             </div>
           </div>
           {% endif %}
@@ -60,7 +66,7 @@
       </div>
       <div class="col-md-3">
         <div class="list-group mt-2">
-          <li class="list-group-item active text-center" style="background-color:#0f2b72;">News</li>
+          <li class="list-group-item active text-center" style="background-color:#0f2b72;">Recent News</li>
           <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
           <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
           <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
@@ -72,12 +78,12 @@
       <div id="menu-outer" style="margin-top:10px">
         <div class="table">
           <ul id="horizontal-list">
-            <li><a href="#">Company Overview <span>|</span></a></li>
+            <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
             <li><a href="#">Vision & mission <span>|</span></a></li>
-            <li><a href="#">Heritage <span>|</span></a></li>
-            <li><a href="#">CSR <span>|</span></a></li>
-            <li><a href="#">News <span>|</span></a></li>
-            <li><a href="#">Awards</a></li>
+            <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
+            <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
+            <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
+            <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
           </ul>
         </div>
       </div>

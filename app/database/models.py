@@ -111,6 +111,10 @@ class Applicant(db.Document):
 	
 
 class Distributor(db.Document):
+	DistributorName=db.StringField()
+	DistributorAddress=db.StringField()
+	DistributorContactNum=db.StringField()
+	DistributorEmail=db.StringField()
 	InvestmentAmount=db.StringField()
 	Item=db.StringField()
 	ItemQuantity=db.StringField()

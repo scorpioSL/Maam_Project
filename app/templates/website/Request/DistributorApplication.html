@@ -1,0 +1,89 @@
+{% extends "website/homeLayout.html" %}
+{% block content %}
+
+<section class="page-section about-heading">
+    
+    <div class="col-lg-12 mt-2">
+      <!-- Default form contact -->
+<form class="text-center border border-light p-5" action="#!">
+      <p class="h4 mb-4">Distributor Application</p>
+  <div class="row">
+      <div class="col-md-6">
+              <label>Personel Details</label>
+ 
+
+  <!-- Name -->
+  <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Name">
+  <!-- Address -->
+  <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Residentiol Address">
+  <!-- contact Number -->
+  <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Contact Number">
+  <!-- Email -->
+  <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="E-mail">
+   <!-- Investment Amount -->
+   <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Investment Amount">
+
+  
+  <!-- Copy -->
+  <!-- <div class="custom-control custom-checkbox mb-4">
+      <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+      <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+  </div> -->
+
+  
+  </div>
+  <div class="col-md-6">
+    <!-- product Details       -->
+  <label>Product Details</label>
+  <select class="browser-default custom-select mb-4">
+      <option value="" selected >Select the products</option>
+      <option value="1" >Feedback</option>
+      <option value="2">Report a bug</option>
+      <option value="3">Feature request</option>
+      <option value="4">Feature request</option>
+  </select>
+
+  <!--Product Quantity-->
+  <input type="text" id="defaultContactFormName" class="form-control mb-2" placeholder="Quantity">
+
+  <button type="button" class="btn btn-primary mb-2">Add to table</button>
+
+  <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Quantity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td><a href="">Delete</a></td>
+              
+            </tr>
+            
+          </tbody>
+        </table>
+
+  </div>
+
+
+
+   
+  </div>
+  <!-- Send button -->
+  
+          <button class="btn btn-info " type="submit">Submit</button>
+          
+</form>
+<!-- Default form contact -->
+    </div>
+ 
+</section>
+
+
+
+
+{% endblock content%}

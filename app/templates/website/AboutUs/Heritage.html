@@ -33,12 +33,12 @@ ul#horizontal-list li {
       <div id="menu-outer" style="margin-top:10px">
         <div class="table">
           <ul id="horizontal-list">
-            <li><a href="#">Company Overview <span>|</span></a></li>
-            <li><a href="#">Vision & mission <span>|</span></a></li>
-            <li><a href="#">Heritage <span>|</span></a></li>
-            <li><a href="#">CSR <span>|</span></a></li>
-            <li><a href="#">News <span>|</span></a></li>
-            <li><a href="#">Awards</a></li>
+              <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
+              <li><a href="#">Vision & mission <span>|</span></a></li>
+              <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
+              <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
+              <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
+              <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
           </ul>
         </div>
       </div>

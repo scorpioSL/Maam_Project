@@ -2,18 +2,37 @@
 {% block content %}
 
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+<style type="text/css">
+  ul#horizontal-list li {
+    display: inline;
+  }
+  .list-group-item {
+  color: #1d809f;
+}
+</style>
 
 </section>
 <section class="page-section about-heading">
   <div class="container">
+    <div class="row">
+      <div class="col-md-9">
     <div class="about-heading-content mt-2">
       {% if not AllAwards %}
       <!-- Create a Empty view here if no posts are available -->
+      <div class="row">
+        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+            <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+                <h5 class="section-heading mb-2">
+                    <span class="section-heading-lower text-center"> Post Not found !</span>
+                </h5>
+            </div>
+          </div>
+      </div>
       {% endif %}
       {% for award in AllAwards %}
       {% if not award.PostImage %}
       <div class="row">
-        <div class="col-xl-8 col-lg-6 mx-auto mt-2">
+        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
           <!-- Change the css as you want. I just put the css -->
           {% if current_user.UserType.TypeDescription == 'Admin' %}
           <div class="alert alert-success" role="alert">
@@ -41,7 +60,7 @@
       </div>
       {% else %}
       <div class="row">
-        <div class="col-xl-8 col-lg-6 mx-auto mt-2">
+        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
           <!-- Change the css as you want. I just put the css -->
           {% if current_user.UserType.TypeDescription == 'Admin' %}
           <div class="alert alert-success" role="alert">
@@ -71,8 +90,35 @@
       {% endif %}
       {% endfor %}
 
+       <!-- bottom nav -->
+       <div>
+          <div id="menu-outer" style="margin-top:10px">
+            <div class="table">
+              <ul id="horizontal-list">
+                  <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
+                  <li><a href="#">Vision & mission <span>|</span></a></li>
+                  <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- bottom nav -->
 
     </div>
+  </div>
+
+  <div class="col-md-3">
+      <div class="list-group mt-2">
+        <li class="list-group-item active text-center" style="background-color:#0f2b72;">Recent Awards</li>
+        <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+        <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+        <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+      </div>
+  </div>
+  </div>
   </div>
 </section>
 
