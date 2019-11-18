@@ -1,0 +1,4 @@
+pip3 install setuptools
+pip3 install flask_bcrypt
+pip3 install flask_login
+pip3 install mongoengine
