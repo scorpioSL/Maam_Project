@@ -113,6 +113,7 @@ def add_Csr():
 
 # Editing All The Posts(Types) In One Route
 @posts.route('/Edit_POST/<PostID>/<currentURL>',methods = ['GET','POST'])
+@login_required
 def edit_Post(PostID,currentURL):
 	# Form Displaying Title Name
 	PostTypeCheck = Post.objects(id = PostID).first()

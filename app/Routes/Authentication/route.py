@@ -1,5 +1,5 @@
 from flask import *
-from app.database.models import User,UserType,PostType
+from app.database.models import User,UserType,PostType,FinishedGoodCategory
 from app import bcrypt
 from app import LoginManager
 from flask_login import login_user, current_user, logout_user, login_required
@@ -86,6 +86,22 @@ def forgot():
 	return render_template('Admin/Authentication/forgotPassword.html')
 
 @admin.route('/logout')
+@login_required
 def logout():
 	logout_user()
 	return redirect(url_for('Authentication.login'))
+
+
+# *****************---Dashboard---****************************
+@admin.route('/dashboard')
+@login_required
+def dashboard():
+	return render_template('Admin/Dashboard/index.html')
+
+
+@admin.route('/AddCategories')
+def AddCategory():
+	FinishedGoodCategory(CatDescription="Chocolate").save()
+	FinishedGoodCategory(CatDescription="Vanilla").save()
+	FinishedGoodCategory(CatDescription="Strawberry").save()
+	return 'Success'
