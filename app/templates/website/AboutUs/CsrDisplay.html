@@ -8,9 +8,10 @@
   ul#horizontal-list li {
     display: inline;
   }
+
   .list-group-item {
-  color: #1d809f;
-}
+    color: #1d809f;
+  }
 </style>
 
 
@@ -21,19 +22,22 @@
 
         <div class="about-heading-content mt-2">
           {% for CSR in AllCSR %}
-          {% if current_user.UserType.TypeDescription == 'Admin' %}
-          {% if request.endpoint == 'Posts.UniquePost' %}
-          <!-- Delete or Edit Part are only showing in Uniquer Post route -->
-          <div class="alert alert-success" role="alert">
-            <a href="{{ url_for('Posts.edit_Post',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
-              <button class="btn btn-warning">Edit</button>
-            </a>
-            <a href="{{ url_for('Posts.DeletePost',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
-              <button class="btn btn-danger">Delete</button>
-            </a>
-          </div>
+          {% if current_user.UserType %}
+            {% if current_user.UserType.TypeDescription == 'Admin' %}
+              {% if request.endpoint == 'Posts.UniquePost' %}
+              <!-- Delete or Edit Part are only showing in Uniquer Post route -->
+              <div class="alert alert-success" role="alert">
+                <a href="{{ url_for('Posts.edit_Post',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
+                  <button class="btn btn-warning">Edit</button>
+                </a>
+                <a href="{{ url_for('Posts.DeletePost',PostID = CSR.id,currentURL = 'Posts.csrDisplay') }}">
+                  <button class="btn btn-danger">Delete</button>
+                </a>
+              </div>
+              {% endif %}
+            {% endif %}
           {% endif %}
-          {% endif %}
+
           <div class="row mb-4">
             <div class="col-xl-10 col-lg-10 mx-auto">
               <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
@@ -55,7 +59,8 @@
                 <p class="mt-2">{{ CSR.PostContent }}</p>
               </div>
               <div>
-                <p style="font-size:10px; color: #8e8080;" class="mt-2">POST ON <span style="color: red;">{{CSR.DateCreated}}</span> </p>
+                <p style="font-size:10px; color: #8e8080;" class="mt-2">POST ON <span
+                    style="color: red;">{{CSR.DateCreated[0:16]}}</span> </p>
               </div>
             </div>
           </div>
@@ -83,12 +88,12 @@
             <div id="menu-outer" style="margin-top:10px">
               <div class="table">
                 <ul id="horizontal-list">
-                    <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
-                    <li><a href="#">Vision & mission <span>|</span></a></li>
-                    <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
-                    <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
-                    <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
-                    <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
+                  <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
+                  <li><a href="#">Vision & mission <span>|</span></a></li>
+                  <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
+                  <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
                 </ul>
               </div>
             </div>
@@ -111,14 +116,14 @@
 
 
 <script>
-  function startRefresh() {
-    $.get('', function (data) {
-      $(document.body).html(data);
-    });
-  }
-  $(function () {
-    setTimeout(startRefresh, 10000);
-  });
+  // function startRefresh() {
+  //   $.get('', function (data) {
+  //     $(document.body).html(data);
+  //   });
+  // }
+  // $(function () {
+  //   setTimeout(startRefresh, 10000);
+  // });
 
   $(document).ready(function () {
     let searchParams = new URLSearchParams(window.location.search)

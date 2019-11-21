@@ -6,9 +6,10 @@
   ul#horizontal-list li {
     display: inline;
   }
+
   .list-group-item {
-  color: #1d809f;
-}
+    color: #1d809f;
+  }
 </style>
 
 </section>
@@ -16,131 +17,135 @@
   <div class="container">
     <div class="row">
       <div class="col-md-9">
-    <div class="about-heading-content mt-2">
-      {% if not AllAwards %}
-      <!-- Create a Empty view here if no posts are available -->
-      <div class="row">
-        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
-            <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+        <div class="about-heading-content mt-2">
+          {% if not AllAwards %}
+          <!-- Create a Empty view here if no posts are available -->
+          <div class="row">
+            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
                 <h5 class="section-heading mb-2">
-                    <span class="section-heading-lower text-center"> Post Not found !</span>
+                  <span class="section-heading-lower text-center"> Post Not found !</span>
                 </h5>
+              </div>
             </div>
           </div>
-      </div>
-      {% endif %}
-      {% for award in AllAwards %}
-      {% if not award.PostImage %}
-      <div class="row">
-        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
-          <!-- Change the css as you want. I just put the css -->
-          {% if current_user.UserType.TypeDescription == 'Admin' %}
-          {% if request.endpoint == 'Posts.UniquePost' %}
-          <div class="alert alert-success" role="alert">
-            <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
-              <button class="btn btn-danger">Delete</button>
-            </a>
-            <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
-              <button class="btn btn-warning">Edit</button>
-            </a>
-          </div>
           {% endif %}
-          {% endif %}
-          <!-- end of delete box -->
-          <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
-            <h5 class="section-heading mb-2">
-              <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
-                <span class="section-heading-lower">{{ award.PostTittle }}</span>
-              </a>
-            </h5>
-            <!-- subTittle -->
-            {% if award.PostSubTitle %}
-            <p>gghfhgfg</p>
-            {% endif %}
-            <hr>
+          {% for award in AllAwards %}
+          {% if not award.PostImage %}
+          <div class="row">
+            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+              <!-- Change the css as you want. I just put the css -->
+              {% if current_user.UserType %}
+              {% if current_user.UserType.TypeDescription == 'Admin' %}
+              {% if request.endpoint == 'Posts.UniquePost' %}
+              <div class="alert alert-success" role="alert">
+                <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
+                  <button class="btn btn-danger">Delete</button>
+                </a>
+                <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
+                  <button class="btn btn-warning">Edit</button>
+                </a>
+              </div>
+              {% endif %}
+              {% endif %}
+              {% endif %}
+              <!-- end of delete box -->
+              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+                <h5 class="section-heading mb-2">
+                  <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
+                    <span class="section-heading-lower">{{ award.PostTittle }}</span>
+                  </a>
+                </h5>
+                <!-- subTittle -->
+                {% if award.PostSubTitle %}
+                <p>gghfhgfg</p>
+                {% endif %}
+                <hr>
 
-            <p class="mt-2">{{ award.PostContent }}</p>
+                <p class="mt-2">{{ award.PostContent }}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {% else %}
-      <div class="row">
-        <div class="col-xl-10 col-lg-10 mx-auto mt-2">
-          <!-- Change the css as you want. I just put the css -->
-          {% if current_user.UserType.TypeDescription == 'Admin' %}
-          {% if request.endpoint == 'Posts.UniquePost' %}
-          <div class="alert alert-success" role="alert">
-            <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
-              <button class="btn btn-danger">Delete</button>
-            </a>
-            <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
-              <button class="btn btn-warning">Edit</button>
-            </a>
+          {% else %}
+          <div class="row">
+            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+              <!-- Change the css as you want. I just put the css -->
+              {% if current_user.UserType %}
+              {% if current_user.UserType.TypeDescription == 'Admin' %}
+              {% if request.endpoint == 'Posts.UniquePost' %}
+              <div class="alert alert-success" role="alert">
+                <a href="{{ url_for('Posts.DeletePost',PostID = award.id,currentURL = 'Posts.awards') }}">
+                  <button class="btn btn-danger">Delete</button>
+                </a>
+                <a href="{{ url_for('Posts.edit_Post',PostID = award.id,currentURL = 'Posts.awards') }}">
+                  <button class="btn btn-warning">Edit</button>
+                </a>
+              </div>
+              {% endif %}
+              {% endif %}
+              {% endif %}
+              <!-- end of delete box -->
+              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+                <h5 class="section-heading mb-2">
+                  <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
+                    <span class="section-heading-lower ">{{ award.PostTittle }}</span>
+                  </a>
+                </h5>
+                <!-- subTittle -->
+                {% if award.PostSubTitle %}
+                <p>{{ award.PostSubTitle }}</p>
+                {% endif %}
+                <hr>
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
+                  src="{{ url_for('static',filename = award.PostImage) }}" alt="">
+                <p class="mt-2">{{ award.PostContent }}</p>
+              </div>
+            </div>
           </div>
           {% endif %}
-          {% endif %}
-          <!-- end of delete box -->
-          <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
-            <h5 class="section-heading mb-2">
-              <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
-                <span class="section-heading-lower ">{{ award.PostTittle }}</span>
-              </a>
-            </h5>
-            <!-- subTittle -->
-            {% if award.PostSubTitle %}
-            <p>{{ award.PostSubTitle }}</p>
-            {% endif %}
-            <hr>
-            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
-              src="{{ url_for('static',filename = award.PostImage) }}" alt="">
-            <p class="mt-2">{{ award.PostContent }}</p>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
+          {% endfor %}
 
-       <!-- bottom nav -->
-       <div>
-          <div id="menu-outer" style="margin-top:10px">
-            <div class="table">
-              <ul id="horizontal-list">
+          <!-- bottom nav -->
+          <div>
+            <div id="menu-outer" style="margin-top:10px">
+              <div class="table">
+                <ul id="horizontal-list">
                   <li><a href="{{url_for('Website.companyOverview')}}">Company Overview <span>|</span></a></li>
                   <li><a href="#">Vision & mission <span>|</span></a></li>
                   <li><a href="{{url_for('Website.heritage')}}">Heritage <span>|</span></a></li>
                   <li><a href="{{url_for('Posts.csrDisplay')}}">CSR <span>|</span></a></li>
                   <li><a href="{{url_for('Posts.newsDisplay')}}">News <span>|</span></a></li>
                   <li><a href="{{url_for('Posts.awards')}}">Awards</a></li>
-              </ul>
+                </ul>
+              </div>
             </div>
           </div>
+          <!-- bottom nav -->
+
         </div>
-        <!-- bottom nav -->
-
-    </div>
-  </div>
-
-  <div class="col-md-3">
-      <div class="list-group mt-2">
-        <li class="list-group-item active text-center" style="background-color:#0f2b72;">Recent Awards</li>
-        <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-        <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-        <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
       </div>
-  </div>
-  </div>
+
+      <div class="col-md-3">
+        <div class="list-group mt-2">
+          <li class="list-group-item active text-center" style="background-color:#0f2b72;">Recent Awards</li>
+          <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+          <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+          <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
-  function startRefresh() {
-    $.get('', function (data) {
-      $(document.body).html(data);
-    });
-  }
-  $(function () {
-    setTimeout(startRefresh, 10000);
-  });
+  // function startRefresh() {
+  //   $.get('', function (data) {
+  //     $(document.body).html(data);
+  //   });
+  // }
+  // $(function () {
+  //   setTimeout(startRefresh, 10000);
+  // });
 
   $(document).ready(function () {
 
