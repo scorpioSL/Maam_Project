@@ -13,9 +13,10 @@
     <title>Login</title>
     <!-- Custom CSS -->
     <link href="{{url_for('static',filename='dist/css/style.min.css')}}" rel="stylesheet">
-     <!-- ConfirmJS CSS File -->
+    <!-- ConfirmJS CSS File -->
     <link rel="stylesheet" href="{{url_for('static',filename = 'css/ConfirmJS/jquery-confirm.css')}}">
-    
+    <!-- Alertify CSS -->
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/Alertify/alertify.min.css')}}">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
                 </div>
                 <div id="loginform">
                     <div class="text-center p-t-20 p-b-20">
-                       <h3 style="color: white">Login</h3>
+                        <h3 style="color: white">Login</h3>
                     </div>
                     <!-- Form -->
                     <form class="form-horizontal m-t-20" id="loginform" action="index.html">
@@ -53,15 +54,21 @@
                             <div class="col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-user"></i></span>
+                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i
+                                                class="ti-user"></i></span>
                                     </div>
-                                    <input type="text" id="TextBoxUserName" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required="">
+                                    <input type="text" id="TextBoxUserName" class="form-control form-control-lg"
+                                        placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
+                                        required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
+                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i
+                                                class="ti-pencil"></i></span>
                                     </div>
-                                    <input type="password" id="TextBoxPassword" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
+                                    <input type="password" id="TextBoxPassword" class="form-control form-control-lg"
+                                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
+                                        required="">
                                 </div>
                             </div>
                         </div>
@@ -69,8 +76,10 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <div class="p-t-20">
-                                        <button class="btn btn-info"  type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                        <button id="ButtonLogin" class="btn btn-success float-right" type="button">Login</button>
+                                        <button class="btn btn-info" type="button"><i class="fa fa-lock m-r-5"></i> Lost
+                                            password?</button>
+                                        <button id="ButtonLogin" class="btn btn-success float-right"
+                                            type="button">Login</button>
                                     </div>
                                 </div>
                             </div>
@@ -79,86 +88,138 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
     <!-- ============================================================== -->
     <!-- All Required js -->
     <!-- ============================================================== -->
     <script src="{{url_for('static',filename='assets/libs/jquery/dist/jquery.min.js')}}"></script>
-     <!-- ConfirmJS JS File -->
+    <!-- ConfirmJS JS File -->
     <script src="{{ url_for('static',filename='js/ConfirmJS/jquery-confirm.js') }}"></script>
     <!-- Global Customize JS Methods File -->
     <script src="{{ url_for('static',filename='js/GlobalJS/Global.js') }}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{url_for('static',filename='assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{url_for('static',filename='assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- Alertify JS For Alerts -->
+    <script src="{{ url_for('static',filename='js/Alertify/alertify.min.js') }}"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
+
+    <script>
+        // Alertify Default Settings
+        alertify.set('notifier', 'delay', 7);
+        alertify.set('notifier', 'position', 'top-center');
+    </script>
+
     <script>
 
-    $(document).ready(function(){
-        var ShowAlert = '{{ ShowAlert }}'
-        if(ShowAlert == 'True')
-        {
-            $('#ShowSuccessAlert').removeAttr('hidden');
-        }
-    });
+        $(document).ready(function () {
+            // var ShowAlert = '{{ ShowAlert }}'
+            // if (ShowAlert == 'True') {
+            //     // $('#ShowSuccessAlert').removeAttr('hidden');
+            //     alertify.success("Successfully Registered!");
+            // }
 
-    $('[data-toggle="tooltip"]').tooltip();
-    $(".preloader").fadeOut();
-    // ============================================================== 
-    // Login and Recover Password 
-    // ============================================================== 
-    $('#to-recover').on("click", function() {
-        $("#loginform").slideUp();
-        $("#recoverform").fadeIn();
-    });
-    $('#to-login').click(function(){
-        
-        $("#recoverform").hide();
-        $("#loginform").fadeIn();
-    });
+            let searchParams = new URLSearchParams(window.location.search)
+            if (searchParams.has('ShowAlert')) {
+                let param = searchParams.get('ShowAlert')
+                if (param == "True") {
 
-    $('#ButtonLogin').click(function(){
-        Login();
-    });
+                    alertify.success("Successfully Registered!");
+                    var oldURL = window.location.href;
+                    var index = 0;
+                    var newURL = oldURL;
+                    index = oldURL.indexOf('?');
+                    if (index == -1) {
+                        index = oldURL.indexOf('#');
+                    }
+                    if (index != -1) {
+                        newURL = oldURL.substring(0, index);
+                    }
 
-    function Login()
-    {
-        $Username = $('#TextBoxUserName').val();
-        $Password = $('#TextBoxPassword').val();
-        if($Username != "" && $Password != "")
-        {
-            $.ajax({
-                type:'post',
-                url:'/login',
-                data:{'Username':$Username,'Password':$Password},
-                success:function(result)
-                {
-                    if(result.Type == 'Success')
-                    {
-                        //If user is redirected by login required to the login page then redirecting to the user requested url after successfull login
-                        let searchParams = new URLSearchParams(window.location.search)
-                        if(searchParams.has('next'))
-                        {
-                            let param = searchParams.get('next')
-                            openWindow(param);
+                    setTimeout(function () {
+                        window.open(newURL, '_self')
+                    }, 7500);
+
+
+                }
+            }
+            else if (searchParams.has('next'))
+            {
+                alertify.warning("You must login first!");
+            }
+
+
+        });
+
+
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+        $('#to-login').click(function () {
+
+            $("#recoverform").hide();
+            $("#loginform").fadeIn();
+        });
+
+        $('#ButtonLogin').click(function () {
+            Login();
+        });
+
+        $('#TextBoxUserName').keyup(function (event) {
+            if (event.keyCode === 13) {
+                Login();
+            }
+        });
+
+        $('#TextBoxPassword').keyup(function (event) {
+            if (event.keyCode === 13) {
+                Login();
+            }
+        });
+
+        function Login() {
+            $Username = $('#TextBoxUserName').val();
+            $Password = $('#TextBoxPassword').val();
+            if ($Username != "" && $Password != "") {
+                $.ajax({
+                    type: 'post',
+                    url: '/login',
+                    data: { 'Username': $Username, 'Password': $Password },
+                    success: function (result) {
+                        if (result.Type == 'Success') {
+                            //If user is redirected by login required to the login page then redirecting to the user requested url after successfull login
+                            let searchParams = new URLSearchParams(window.location.search)
+                            if (searchParams.has('next')) {
+                                let param = searchParams.get('next')
+                                openWindow(param);
+                                return;
+                            }
+                            openWindow('/dashboard');
                             return;
                         }
-                        openWindow('/dashboard');
+                        showMessage(result.Type, result.Message);
                         return;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR.status, errorThrown);
                     }
-                    showMessage(result.Type,result.Message);
-                    return;
-                },
-                error:function(jqXHR, textStatus, errorThrown)
-                {
-                    console.log(jqXHR.status, errorThrown);
-                }
-            });
+                });
+            }
+            else {
+                alertify.error("Please provide username and password!");
+            }
         }
-    }
 
     </script>
 

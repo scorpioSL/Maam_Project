@@ -1,7 +1,7 @@
 # #################################################################################################
 # Flask Server Imports
 from flask import Flask
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 # MongoEngine Imports
 import mongoengine as db
 # #################################################################################################
@@ -140,7 +140,8 @@ class FinishedGood(db.Document):
 	ItemName=db.StringField()
 	ItemUnit=db.StringField()
 	ItemPrice=db.StringField()
-	CatId=db.ReferenceField('FinishedGoodCategory')
+	ItemCategory=db.ReferenceField('FinishedGoodCategory')
+	ItemImagePath = db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))

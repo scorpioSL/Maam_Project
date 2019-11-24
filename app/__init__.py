@@ -5,6 +5,7 @@ from app.config.config import Config
 from flask_login import LoginManager
 from app.database.models import User
 
+
 # Creating Flask Object
 app = Flask(__name__)
 # BCrypt Object For Encrypting Data
@@ -30,6 +31,7 @@ from app.Routes.Vacancy.route import vacancy
 from app.Routes.Product.route import product
 from app.Routes.Request.route import request
 from app.Routes.Feedback.route import feedback
+from app.Routes.GetBasicData.route import GetBasicData
 ##Register Blue print
 app.register_blueprint(admin)
 app.register_blueprint(website)
@@ -38,34 +40,4 @@ app.register_blueprint(vacancy)
 app.register_blueprint(product)
 app.register_blueprint(request)
 app.register_blueprint(feedback)
-
-
-
-#<!-- ============================================================== -->
-
-
-
-
-
-
-
-# *****************---Dashboard---****************************
-@app.route('/dashboard')
-def dashboard():
-	return render_template('Admin/Dashboard/index.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.register_blueprint(GetBasicData)

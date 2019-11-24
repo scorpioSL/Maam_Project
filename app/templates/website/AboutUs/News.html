@@ -7,9 +7,10 @@
   ul#horizontal-list li {
     display: inline;
   }
+
   .list-group-item {
-  color: #1d809f;
-}
+    color: #1d809f;
+  }
 </style>
 
 
@@ -20,6 +21,7 @@
         <div class="about-heading-content mt-2">
           {% for News in AllNews %}
           <!-- Change the css as you want. I just put the css -->
+          {% if current_user.UserType %}
           {% if current_user.UserType.TypeDescription == 'Admin' %}
           {% if request.endpoint == 'Posts.UniquePost' %}
           <div class="alert alert-success" role="alert">
@@ -32,6 +34,8 @@
           </div>
           {% endif %}
           {% endif %}
+          {% endif %}
+
           {% if not News.PostImage %}
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-10 mx-auto">
@@ -69,7 +73,8 @@
                 <p class="mt-2">{{ News.PostContent }}</p>
               </div>
               <div>
-                <p style="font-size:10px; color: #8e8080;" class="mt-2">POST ON <span style="color: red;">{{News.DateCreated}}</span> </p>
+                <p style="font-size:10px; color: #8e8080;" class="mt-2">POST ON <span
+                    style="color: red;">{{News.DateCreated[0:16]}}</span> </p>
               </div>
             </div>
           </div>
@@ -111,14 +116,14 @@
 
 
 <script>
-  function startRefresh() {
-    $.get('', function (data) {
-      $(document.body).html(data);
-    });
-  }
-  $(function () {
-    setTimeout(startRefresh, 10000);
-  });
+  // function startRefresh() {
+  //   $.get('', function (data) {
+  //     $(document.body).html(data);
+  //   });
+  // }
+  // $(function () {
+  //   setTimeout(startRefresh, 10000);
+  // });
 </script>
 
 

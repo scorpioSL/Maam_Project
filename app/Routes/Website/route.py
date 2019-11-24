@@ -28,6 +28,7 @@ def heritage():
 
 
 # *********************************************
+@website.route('/')
 @website.route('/Home')
 def home():
 	return render_template('website/AboutUs/Home.html')
