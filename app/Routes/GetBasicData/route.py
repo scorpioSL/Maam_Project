@@ -6,7 +6,6 @@ import re
 GetBasicData = Blueprint('GetBasicData', __name__)
 
 @GetBasicData.route('/GetFinishedGoods',methods = ['GET'])
-@login_required
 def GetFinishedGoodCategories():
     Categories = FinishedGoodCategory.objects(Archived = False)
     Data = []
@@ -28,7 +27,7 @@ def GetProducts(Search = None,Category = None):
         Products = FinishedGood.objects(Archived = False,ItemCategory = ItemCategory)
     elif Search and not Category:
         Param = str.format('.*{}.*',Search)
-        Regex = re.compile(Param)
+        Regex = re.compile(Param,re.IGNORECASE)
         Products = FinishedGood.objects(Archived = False,ItemName = Regex)
     Data = []
     for Product in Products:
