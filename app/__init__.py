@@ -5,6 +5,7 @@ from app.config.config import Config
 from flask_login import LoginManager
 from app.database.models import User
 
+
 # Creating Flask Object
 app = Flask(__name__)
 # BCrypt Object For Encrypting Data

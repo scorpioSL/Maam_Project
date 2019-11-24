@@ -81,16 +81,6 @@
 
         $('#AddProductForm').submit(function (e) {
             e.preventDefault();
-            
-
-            var i = document.createElement("input"); //input element, text
-            i.setAttribute('type', "text");
-            i.setAttribute('hidden', "true");
-            i.setAttribute('name', "SelectedFieldValue")
-            i.setAttribute('value',$('#DropDownListItemCategory').val());
-            i.setAttribute('id', $('#DropDownListItemCategory').val());
-
-            document.getElementById('AddProductForm').appendChild(i);
 
             var formData = new FormData(this);
 
@@ -98,17 +88,17 @@
                 type: 'post',
                 data: formData,
                 url: '/Add_Product',
-                dataType: 'json',
                 success: function (data) {
-                    console.log(data.d);
-                    return;
-                    $("form").trigger("reset");
                     if (data.Type == "Success") {
+                        $("form").trigger("reset");
                         alertify.success(data.Message);
                     }
                     else {
-                        alertify.error('Error message');
+                        alertify.error(data.Message);
                     }
+                },
+                error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
                 },
                 cache: false,
                 contentType: false,

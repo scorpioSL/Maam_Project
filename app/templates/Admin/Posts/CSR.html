@@ -59,7 +59,7 @@
     <script>
         // Edit Csr Block
         var Obj = {};
-        
+
         $(document).ready(function () {
             var location = window.location.href.substr(7).split('/')[1]
             if (location == 'Edit_POST') {
@@ -113,13 +113,12 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        $("form").trigger("reset");
                         if (data.Type == "Success") {
-
+                            $("form").trigger("reset");
                             alertify.success(data.Message);
                         }
                         else {
-                            alertify.error('Error message');
+                            alertify.error(data.Message);
                         }
                     },
                     cache: false,
