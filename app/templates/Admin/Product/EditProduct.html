@@ -1,6 +1,9 @@
 {% extends "Admin/Dashboard/dashboardLayout.html" %}
 {% block content %}
 
+<script src="{{url_for('static',filename='js/jquery-ui/jquery-ui.min.js')}}"></script>
+<link rel="stylesheet" href="{{  url_for('static',filename='js/jquery-ui/jquery-ui.min.css') }}">
+
 <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -21,53 +24,54 @@
     <div class="container-fluid col-md-9 col-lg-10">
         <!-- Search form -->
         <form class="form-inline col-md-6 form-sm active-cyan-2 mt-2">
-            <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search " aria-label="Search"
-                style="border-color: black">
+            <input class="form-control form-control-sm mr-3 w-75" type="text" id="TextBoxSearch" placeholder="Search"
+                aria-label="Search" style="border-color: black">
             <i class="fas fa-search" aria-hidden="true"></i>
         </form>
 
-        <form>
+        <form id="UpdateProdcutForm">
             <div class="form-group mt-4">
                 <label for="exampleFormControlInput1">Item Code</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black">
+                <input type="text" class="form-control" name="TextBoxItemCode" id="TextBoxItemCode"
+                    style="border-color: black">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Product Name</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black">
+                <input type="text" class="form-control" name="TextBoxProductName" id="TextBoxProductName"
+                    style="border-color: black">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Unit</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black">
+                <input type="text" class="form-control" name="TextBoxUnit" id="TextBoxUnit" style="border-color: black">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Price</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" style="border-color: black">
+                <input type="text" class="form-control" name="TextBoxPrice" id="TextBoxPrice"
+                    style="border-color: black">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Item category</label>
-                <select class="custom-select custom-select-sm " style="border-color: black">
-                    <option selected>Select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select custom-select-sm" name="DropDownListItemCategory"
+                    id="DropDownListItemCategory" style="border-color: black">
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlFile1">Image</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" style="border-color: black">
+                <input type="file" class="form-control-file" name="ImageFieldImage" id="ImageFieldImage"
+                    style="border-color: black">
             </div>
 
             <div class="row">
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-warning mt-2">UPDATE</button>
+                    <button type="submit" class="btn btn-warning mt-2">UPDATE</button>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-danger mt-2">DELETE</button>
+                    <button type="button" id="ButtonDelete" class="btn btn-danger mt-2">DELETE</button>
                 </div>
 
             </div>
@@ -77,5 +81,136 @@
 
     </div>
 
+
+    <script>
+        $(document).ready(function () {
+
+            LoadDropDown();
+
+            // Product Search
+            $("#TextBoxSearch").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/GetProducts/AutoComplete/' + $('#TextBoxSearch').val(),
+                        type: 'post',
+                        success: function (data) {
+                            SourceData = [];
+                            $.each(data, function (index, value) {
+                                SourceData.push(value['ItemName']);
+                            });
+                            response(SourceData);
+                        },
+                        error: function (xhr, errorThrown) {
+                            console.log(xhr, errorThrown);
+                        }
+                    });
+                },
+                select: function (e, ui) {
+                    $.ajax({
+                        url: '/SetProductAutocompleteSelected/' + ui.item.label,
+                        type: 'post',
+                        success: function (data) {
+                            console.log(data);
+                            if (data.Message === "Success") {
+                                $('#TextBoxItemCode').val(data.ItemCode);
+                                $('#TextBoxProductName').val(data.ItemName);
+                                $('#TextBoxUnit').val(data.Unit);
+                                $('#TextBoxPrice').val(data.Price);
+                                $("#DropDownListItemCategory").prop('selectedIndex', data.ItemCategoryIndex);
+                            }
+                            else {
+                                alertify.error(data.Message);
+                            }
+
+
+                        },
+                        error: function (xhr, errorThrown) {
+                            console.log(xhr, errorThrown);
+                        }
+                    });
+                },
+            });
+        });
+
+        $('#ButtonDelete').click(function (e) {
+            var Param = $('#TextBoxItemCode').val();
+            if (Param == "") {
+                alertify.error("Please search and select the project!");
+                return;
+            }
+            $.ajax({
+                url: '/DeleteProduct/' + Param,
+                type: 'post',
+                success: function (data) {
+                    if(data.Message == "Success")
+                    {
+                        alertify.success(data.Message);
+                        ClearAll();
+                        return;
+                    }
+                    alertify.error(data.Message);
+                },
+                error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+            });
+        });
+
+
+        $('#UpdateProdcutForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'post',
+                data: formData,
+                url: '/Edit_Product',
+                success: function (data) {
+                    if (data.Type == "Success") {
+                        $("form").trigger("reset");
+                        alertify.success(data.Message);
+                    }
+                    else {
+                        alertify.error(data.Message);
+                    }
+                },
+                error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        function ClearAll() {
+            $("#TextBoxSearch").val("");
+            $('#TextBoxItemCode').val("");
+            $('#TextBoxProductName').val("");
+            $('#TextBoxUnit').val("");
+            $('#TextBoxPrice').val("");
+            $("#DropDownListItemCategory").prop('selectedIndex', 0);
+            $('#ImageFieldImage').val("");
+        }
+
+        function LoadDropDown() {
+            $.ajax({
+                type: 'get',
+                url: '/GetFinishedGoods',
+                success: function (data) {
+                    var options = '';
+                    for (var x = 0; x < data.length; x++) {
+                        options += '<option value="' + data[x]['id'] + '">' + data[x]['CatDescription'] + '</option>';
+                    }
+                    $('#DropDownListItemCategory').html(options);
+                },
+                error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+            });
+        }
+
+
+
+    </script>
 
     {% endblock content %}

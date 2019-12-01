@@ -29,7 +29,7 @@ from app.Routes.Website.route import website
 from app.Routes.Posts.route import posts
 from app.Routes.Vacancy.route import vacancy
 from app.Routes.Product.route import product
-from app.Routes.Request.route import request
+from app.Routes.Request.route import RequestForms
 from app.Routes.Feedback.route import feedback
 from app.Routes.GetBasicData.route import GetBasicData
 ##Register Blue print
@@ -38,6 +38,6 @@ app.register_blueprint(website)
 app.register_blueprint(posts)
 app.register_blueprint(vacancy)
 app.register_blueprint(product)
-app.register_blueprint(request)
+app.register_blueprint(RequestForms)
 app.register_blueprint(feedback)
 app.register_blueprint(GetBasicData)
