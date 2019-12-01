@@ -21,7 +21,7 @@ def login():
 	if request.method == 'POST':
 		Username = request.form['Username']
 		Password = request.form['Password']
-		remember = True
+		remember = False
 		CheckUser = User.objects(UserName = Username).first()
 		if CheckUser:
 			if bcrypt.check_password_hash(CheckUser.UserPassword,Password):

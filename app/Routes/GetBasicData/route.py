@@ -14,6 +14,15 @@ def GetFinishedGoodCategories():
         Data.append(obj)
     return(jsonify(Data))
 
+@GetBasicData.route('/GetProductsDropDown',methods = ['GET'])
+def GetProductsDropdown():
+    Products = FinishedGood.objects(Archived = False)
+    Data = []
+    for Product in Products:
+        obj = {"id":str(Product.id),"ItemName":Product.ItemName}
+        Data.append(obj)
+    return(jsonify(Data))
+
 
 
 @GetBasicData.route('/GetProducts/<Search>',methods = ['GET','POST'])
@@ -35,6 +44,18 @@ def GetProducts(Search = None,Category = None):
         Data.append(obj)
     return(jsonify(Data))
 
+@GetBasicData.route('/GetProducts/AutoComplete/<SearchingText>',methods = ['GET','POST'])
+def GeTProductAutoComplete(SearchingText = None):
+    Data = []
+    if SearchingText:
+        Param = str.format('.*{}.*',SearchingText)
+        Regex = re.compile(Param,re.IGNORECASE)
+        Products = FinishedGood.objects(Archived = False,ItemName = Regex)
+        for Product in Products:
+            obj = {'ItemCode':Product.ItemCode,'ItemName':Product.ItemName,'ItemUnit':Product.ItemUnit,'ItemPrice':Product.ItemPrice,'ItemCategory':Product.ItemCategory.CatDescription,'ItemImagePath':Product.ItemImagePath}
+            Data.append(obj)
+        return jsonify(Data)
+
 
 @GetBasicData.route('/GetNewReleases',methods = ['GET'])
 def GetNewReleases():
@@ -49,3 +70,20 @@ def GetNewReleases():
             if count == 3:
                 break
     return(jsonify(Data))
+
+
+@GetBasicData.route('/SetProductAutocompleteSelected/<ProductName>',methods = ['POST','GET'])
+@login_required
+def SetProductAutoCompleteSelected(ProductName):
+    Product = FinishedGood.objects(Archived = False,ItemName = ProductName).first()
+    if not Product:
+        obj = {"Message":"Error"}
+        return jsonify(obj)
+    FinishedGoodsCategories = FinishedGoodCategory.objects(Archived = False)
+    index = 0
+    for FinishedGoodCategoryObj in FinishedGoodsCategories:
+        if FinishedGoodCategoryObj.CatDescription == Product.ItemCategory.CatDescription:
+            break
+        index = index + 1
+    obj = {"Message":"Success","ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
+    return jsonify(obj)

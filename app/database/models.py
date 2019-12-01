@@ -134,6 +134,7 @@ class Supplier(db.Document):
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
+	SupplierProductList = []
 	
 class FinishedGood(db.Document):
 	ItemCode=db.StringField()
@@ -145,7 +146,9 @@ class FinishedGood(db.Document):
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
+	UserModified = db.StringField()
 	DateLastmodified=db.StringField()
+	Supplier = db.ReferenceField(Supplier)
 	
 
 class FinishedGoodCategory(db.Document):
