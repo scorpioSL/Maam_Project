@@ -98,6 +98,7 @@ def edit_Product():
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # ****************---Add new Category---************************
 @product.route('/Add_category')
 def add_category():
@@ -105,6 +106,8 @@ def add_category():
 
 
 =======
+=======
+>>>>>>> 60be91f805dcc9754fa07fdb02b83e916805303c
 @product.route('/DeleteProduct/<ItemCode>',methods = ['GET','POST'])
 @login_required
 def DeleteProduct(ItemCode):
@@ -121,5 +124,8 @@ def DeleteProduct(ItemCode):
 
 # ------------------------------------------------------------------
 	# WEBSITE FUNCTIONS
+<<<<<<< HEAD
+>>>>>>> 60be91f805dcc9754fa07fdb02b83e916805303c
+=======
 >>>>>>> 60be91f805dcc9754fa07fdb02b83e916805303c
 # ------------------------------------------------------------------
