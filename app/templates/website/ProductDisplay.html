@@ -9,7 +9,7 @@
 
 
         <div class="col-md-12">
-          <div class="input-group md-form form-sm form-2 pl-0 col-md-6">
+          <div class="input-group md-form form-sm form-2 pl-0 col-md-4">
             <input class="form-control my-0 py-1 amber-border" type="text" id="TextBoxSearch" placeholder="Search"
               aria-label="Search">
             <div class="input-group-append">
@@ -37,6 +37,16 @@
                     <!-- Title -->
                     <h5 class="card-title" id="title">Card title</h5>
                     <!-- Text -->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p id="unit">300g</p>
+                      </div>
+
+                      <div class="col-md-6">
+                        <p id="price">Rs 200/=</p>
+                        </div>
+
+                    </div>
 
 
                   </div>
@@ -164,6 +174,7 @@
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
+          TemplateClone.querySelector('#unit').innerHTML = data[i]['ItemUnit'];
           ProductDisplayRow.appendChild(TemplateClone);
         }
       });
@@ -195,6 +206,7 @@
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
+          TemplateClone.querySelector('#unit').innerHTML = data[i]['ItemUnit'];
           ProductDisplayRow.appendChild(TemplateClone);
         }
       });

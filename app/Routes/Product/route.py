@@ -56,6 +56,12 @@ def edit_Product():
 	return render_template('Admin/Product/EditProduct.html')
 
 
+# ****************---Add new Category---************************
+@product.route('/Add_category')
+def add_category():
+	return render_template('Admin/Product/AddCategory.html')
+
+
 # ------------------------------------------------------------------
 						# WEBSITE FUNCTIONS
 # ------------------------------------------------------------------

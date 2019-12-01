@@ -1,0 +1,24 @@
+{% extends "Admin/Dashboard/dashboardLayout.html" %}
+{% block content %}
+
+<div class="page-wrapper">
+
+        <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Add Category</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid col-md-9 col-lg-10">
+                    <form id="AddCategoryForm" method="POST">
+                            <div class="form-group">
+                                    <label for="exampleFormControlInput1">Category</label>
+                                    <input type="text" class="form-control" name="TextBoxCategory" id="TextBoxCategory"
+                                        style="border-color: black">
+                                </div>
+                    </form>
+
+            </div>
+
+{% endblock content %}
