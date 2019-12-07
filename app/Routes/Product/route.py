@@ -57,6 +57,7 @@ def add_Product():
 @login_required
 def edit_Product():
 	if request.method == 'POST':
+		ID = request.form["TextBoxItemId"]
 		ItemCode = request.form['TextBoxItemCode']
 		ProductName = request.form['TextBoxProductName']
 		Unit = request.form['TextBoxUnit']
@@ -75,7 +76,7 @@ def edit_Product():
 			JsonResponse = {"Type": "Error", "Message": Message}
 			return jsonify(JsonResponse)
 		
-		UpdateObj = FinishedGood.objects(ItemCode = ItemCode,Archived = False).first()
+		UpdateObj = FinishedGood.objects(id = ID,Archived = False).first()
 		DuplicateCheck = FinishedGood.objects(ItemCode=ItemCode,Archived = False).first()
 		if DuplicateCheck != UpdateObj:
 			Message = "A product with same ItemCode already added!"

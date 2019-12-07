@@ -85,5 +85,5 @@ def SetProductAutoCompleteSelected(ProductName):
         if FinishedGoodCategoryObj.CatDescription == Product.ItemCategory.CatDescription:
             break
         index = index + 1
-    obj = {"Message":"Success","ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
+    obj = {"Message":"Success","ItemID":str(Product.id),"ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
     return jsonify(obj)
