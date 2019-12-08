@@ -32,6 +32,7 @@ from app.Routes.Product.route import product
 from app.Routes.Request.route import RequestForms
 from app.Routes.Feedback.route import feedback
 from app.Routes.GetBasicData.route import GetBasicData
+from app.Routes.TestData.route import TestData
 ##Register Blue print
 app.register_blueprint(admin)
 app.register_blueprint(website)
@@ -41,3 +42,4 @@ app.register_blueprint(product)
 app.register_blueprint(RequestForms)
 app.register_blueprint(feedback)
 app.register_blueprint(GetBasicData)
+app.register_blueprint(TestData)

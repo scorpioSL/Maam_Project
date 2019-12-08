@@ -15,7 +15,7 @@
           <!-- Name -->
           <input type="text" class="form-control mb-4" id="TextBoxName" placeholder="Name">
           <!-- Address -->
-          <input type="text" class="form-control mb-4" id="TextBoxAddress" placeholder="Residentiol Address">
+          <input type="text" class="form-control mb-4" id="TextBoxAddress" placeholder="Residential Address">
           <!-- contact Number -->
           <input type="text" class="form-control mb-4" id="TextBoxContactNumber" placeholder="Contact Number">
           <!-- Email -->
@@ -45,7 +45,7 @@
           <table class="table table-bordered" id="ProductTable">
             <thead>
               <tr>
-                <th scope="col">Product Name</th>
+                <th scope="col">Raw Material Name</th>
                 <th scope="col">Unit Price (1 KG)</th>
                 <th></th>
               </tr>
@@ -86,28 +86,30 @@
   $('#ButtonSubmit').click(function () {
     var Name = $('#TextBoxName').val();
     var Address = $('#TextBoxAddress').val();
-    var ContactNumber = $('#TextBoxAddress').val();
+    var ContactNumber = $('#TextBoxContactNumber').val();
     var Email = $('#TextBoxEmail').val();
-    
-    if(Name == "" || Address == "" || ContactNumber == "" || Email == "")
-    {
+
+    if (Name == "" || Address == "" || ContactNumber == "" || Email == "") {
       alertify.error("All fields must be filled!");
       return;
     }
 
-    if(TableList.length == 0)
-    {
+    if (TableList.length == 0) {
       alertify.error("Atleast one item must be added to table!");
       return;
     }
-    $data = {"ProductList":JSON.stringify(TableList),"Name":Name,"Address":Address,"ContactNumber":ContactNumber,"Email":Email}
+    $data = { "RowMaterialList": JSON.stringify(TableList), "Name": Name, "Address": Address, "ContactNumber": ContactNumber, "Email": Email }
     $.ajax({
       type: 'post',
       data: $data,
       url: '/Supplier_Application',
       success: function (data) {
-        alertify.success(data);
-        return;
+        if (data.Type == "Success") {
+          alertify.success(data.Message);
+          ClearAll();
+          return;
+        }
+        alertify.error(data.Message);
       }, error: function (xhr, errorThrown) {
         console.log(xhr, errorThrown);
       }
@@ -116,7 +118,7 @@
 
   $('#ButtonAddToTable').click(function () {
     if ($('#TextBoxPrice').val() != "") {
-      obj = { "ProductName": $('#DropDownProductItems :selected').text(), "ProductID": $('#DropDownProductItems').val(), "Price": $('#TextBoxPrice').val() }
+      obj = { "RowMaterialName": $('#DropDownProductItems :selected').text(), "RowMaterialID": $('#DropDownProductItems').val(), "Price": $('#TextBoxPrice').val() }
       TableList.push(obj);
       FillTable();
       ClearProductSection();
@@ -136,7 +138,7 @@
   function FillTable() {
     $("#ProductTable > tbody").empty();
     $.each(TableList, function (index, value) {
-      $String = "<tr><td>" + value.ProductName + "</td><td>" + value.Price + "</><td><button class='btn btn-danger' onclick='DeleteFromArray(" + index + ")'>Delete</td></tr>";
+      $String = "<tr><td>" + value.RowMaterialName + "</td><td>" + value.Price + "</><td><button class='btn btn-danger' onclick='DeleteFromArray(" + index + ")'>Delete</td></tr>";
       $('#ProductTable > tbody:last-child').append($String);
     });
   }
@@ -153,7 +155,7 @@
   function LoadDropDown() {
     $.ajax({
       type: 'get',
-      url: '/GetProductsDropDown',
+      url: '/GetRowMaterialsDropDown',
       success: function (data) {
         var options = '';
         for (var x = 0; x < data.length; x++) {
@@ -166,6 +168,19 @@
       }
     });
   }
+
+  function ClearAll(){
+    $('#TextBoxName').val('');
+    $('#TextBoxAddress').val('');
+    $('#TextBoxContactNumber').val('');
+    $('#TextBoxEmail').val('');
+    TableList = [];
+    FillTable();
+    ClearProductSection();
+    LoadDropDown();
+    $('#ProductTable').hide();
+  };
+
 </script>
 
 

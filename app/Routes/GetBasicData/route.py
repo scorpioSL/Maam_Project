@@ -23,6 +23,15 @@ def GetProductsDropdown():
         Data.append(obj)
     return(jsonify(Data))
 
+@GetBasicData.route('/GetRowMaterialsDropDown',methods = ['GET'])
+def GetRowMaterialsDropdown():
+    RowMaterialList = RowMaterials.objects(Archived = False)
+    Data = []
+    for RowMaterial in RowMaterialList:
+        obj = {"id":str(RowMaterial.id),"ItemName":RowMaterial.RowMaterialDescription}
+        Data.append(obj)
+    return(jsonify(Data))
+
 
 
 @GetBasicData.route('/GetProducts/<Search>',methods = ['GET','POST'])
@@ -45,7 +54,7 @@ def GetProducts(Search = None,Category = None):
     return(jsonify(Data))
 
 @GetBasicData.route('/GetProducts/AutoComplete/<SearchingText>',methods = ['GET','POST'])
-def GeTProductAutoComplete(SearchingText = None):
+def GetProductAutoComplete(SearchingText = None):
     Data = []
     if SearchingText:
         Param = str.format('.*{}.*',SearchingText)

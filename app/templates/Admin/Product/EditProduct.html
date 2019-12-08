@@ -147,7 +147,7 @@
                 url: '/DeleteProduct/' + Param,
                 type: 'post',
                 success: function (data) {
-                    if (data.Message == "Success") {
+                    if (data.Type == "Success") {
                         alertify.success(data.Message);
                         ClearAll();
                         return;
