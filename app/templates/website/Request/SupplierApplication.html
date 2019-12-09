@@ -103,6 +103,7 @@
       type: 'post',
       data: $data,
       url: '/Supplier_Application',
+      beforeSend:function(){alertify.warning("Validating Email!")},
       success: function (data) {
         if (data.Type == "Success") {
           alertify.success(data.Message);

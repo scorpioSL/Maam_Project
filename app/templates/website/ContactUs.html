@@ -1,185 +1,507 @@
 {% extends "website/homeLayout.html" %}
 {% block content %}
+<script src="{{url_for('static',filename='js/jquery-ui/jquery-ui.min.js')}}"></script>
+<link rel="stylesheet" href="{{  url_for('static',filename='js/jquery-ui/jquery-ui.min.css') }}">
 
 <style>
-.white{
-  color: white
-}
+  .white {
+    color: white
+  }
 </style>
 
 <div class=" container contact-section my-5 col-lg-8 col-md-6">
 
   <!-- Form with header -->
   <div class="card">
-    
+
     <!-- Grid row -->
     <div class="row">
-      
+
       <!-- Grid column -->
       <div class="col-lg-8">
-        
+
         <div class="card-body form">
-          
+
           <!-- Header -->
           <h3 class="mt-4"><i class="fas fa-envelope pr-2"></i>Write to us:</h3>
-          
-          <!-- Grid row -->
-          <div class="row">
-            
-            <!-- Grid column -->
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <input type="text" id="form-contact-name" class="form-control">
-                <label for="form-contact-name" class="">Your name</label>
-              </div>
-            </div>
-            <!-- Grid column -->
-            
-            <!-- Grid column -->
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <input type="text" id="form-contact-email" class="form-control">
-                <label for="form-contact-email" class="">Your email</label>
-              </div>
-            </div>
-            <!-- Grid column -->
-            
-          </div>
-          <!-- Grid row -->
-          
-          <!-- Grid row -->
-          <div class="row">
-            
-            <!-- Grid column -->
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <input type="text" id="form-contact-phone" class="form-control">
-                <label for="form-contact-phone" class="">Your Country</label>
-              </div>
-            </div>
-            <!-- Grid column -->
-            
-            <!-- Grid column -->
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <input type="text" id="form-contact-company" class="form-control">
-                <label for="form-contact-company" class="">Subject</label>
-              </div>
-            </div>
-            <!-- Grid column -->
-            <div class="col-md-12 col-sm-9 mt-4"> 
-              <label class="radio-inline mr-3" ><input type="radio" name="optradio" class="mr-2" checked>Feedback</label>
-              <label class="radio-inline mr-3"><input type="radio" name="optradio" class="mr-2">Inquiry</label>
-              <label class="radio-inline mr-3"><input type="radio" name="optradio" class="mr-2"> Other</label>
-            </div>
-            
 
-            
-          </div>
-          <!-- Grid row -->
-          
           <!-- Grid row -->
           <div class="row">
-            
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="TextBoxName" class="form-control">
+                <label for="TextBoxName" class="">Your name</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="TextBoxEmail" class="form-control">
+                <label for="TextBoxEmail" class="">Your email</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="TextBoxCountry" class="form-control">
+                <label for="TextBoxCountry" class="">Your Country</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="TextBoxSubject" class="form-control">
+                <label for="TextBoxSubject" class="">Subject</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+            <div class="col-md-12 col-sm-9 mt-4" id="FeedBackTypes">
+              <!-- Wiil Be Loaded From JS -->
+            </div>
+
+
+
+          </div>
+          <!-- Grid row -->
+
+          <!-- Grid row -->
+          <div class="row">
+
             <!-- Grid column -->
             <div class="col-md-12">
               <div class="md-form mb-0">
-                <textarea id="form-contact-message" class="form-control md-textarea" rows="3"></textarea>
-                <label for="form-contact-message">Your message</label>
-                <a class="btn-floating btn-lg blue mt-2">
+                <textarea id="TextAreaMessage" class="form-control md-textarea" rows="3"></textarea>
+                <label for="TextAreaMessage">Your message</label>
+                <a class="btn-floating btn-lg blue mt-2" id="ButtonSubmit">
                   <i class="far fa-paper-plane"></i>
                 </a>
               </div>
             </div>
             <!-- Grid column -->
-            
+
           </div>
           <!-- Grid row -->
-          
+
         </div>
-        
+
       </div>
       <!-- Grid column -->
-      
+
       <!-- Grid column -->
       <div class="col-lg-4" style="background-color:#0b2463;">
-        
+
         <div class="card-body contact text-center h-100 white-text">
-          
-         
+
+
           <h5 class="mt-4">Maam Biscuits Lanka Pvt (Ltd)</h5>
           <hr class="hr-light my-4">
 
         </div>
-        
+
       </div>
       <!-- Grid column -->
-      
+
     </div>
     <!-- Grid row -->
-    
+
   </div>
-  <!-- Form with header --> 
+  <!-- Form with header -->
 </div>
 <!-- Section: Contact v.3 -->
 
 <section class=" container fluid mt-3 col-lg-9 text-center" style="background-color: #d4d8dc;padding-top: 25px;
 padding-bottom: 25px;
-margin-bottom: 44px;">  
-<div class="row">
-  
-  <div class="col-md-4">
-    <i class="fas fa-map-marker-alt pr-2" style="font-size: 32px;color: #0b2463"></i>
+margin-bottom: 44px;">
+  <div class="row">
 
-    <ul class="text-lg-left list-unstyled ml-4 mt-2">
-      <li>
-        <p>Office: <span>No.226, Main Street, Akurana, Kandy, Sri Lanka.</span></p>
-      </li>
-      <li>
-        <p>factory: <span>No.07, Warakanda Estate, Warakamura, Matale, Sri Lanka.</span> </p>
-      </li>
-    </ul>
-    
-  </div>
-  
-  <div class="col-md-4">
-    <i class="fas fa-phone pr-2" style="font-size: 32px;color: #0b2463"></i>
+    <div class="col-md-4">
+      <i class="fas fa-map-marker-alt pr-2" style="font-size: 32px;color: #0b2463"></i>
 
-    <ul class="text-lg-left list-unstyled ml-4 mt-2">
-      <li>
-        <p>Hotline: <span>+94-772 249 904</span></p>
-      </li>
-      <li>
-        <p>office: <span>+94 (81)-2300024</span> </p>
-      </li>
-    </ul>
-  </div>
-  
-  <div class="col-md-4" >
-    <i class="fas fa-envelope pr-2 "  style="font-size: 32px; color: #0b2463"></i>
+      <ul class="text-lg-left list-unstyled ml-4 mt-2">
+        <li>
+          <p>Office: <span>No.226, Main Street, Akurana, Kandy, Sri Lanka.</span></p>
+        </li>
+        <li>
+          <p>factory: <span>No.07, Warakanda Estate, Warakamura, Matale, Sri Lanka.</span> </p>
+        </li>
+      </ul>
 
-    
-    <ul class="text-lg-left list-unstyled ml-4 mt-2">
-      <li>
-        <p>General E-mail: <span>info@maambiscuits.com.lk</span></p>
-      </li>
-      <li>
-        <p>Export : <span>export@maambiscuits.com.lk</span> </p>
-      </li>
-    </ul>
+    </div>
+
+    <div class="col-md-4">
+      <i class="fas fa-phone pr-2" style="font-size: 32px;color: #0b2463"></i>
+
+      <ul class="text-lg-left list-unstyled ml-4 mt-2">
+        <li>
+          <p>Hotline: <span>+94-772 249 904</span></p>
+        </li>
+        <li>
+          <p>office: <span>+94 (81)-2300024</span> </p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4">
+      <i class="fas fa-envelope pr-2 " style="font-size: 32px; color: #0b2463"></i>
+
+
+      <ul class="text-lg-left list-unstyled ml-4 mt-2">
+        <li>
+          <p>General E-mail: <span>info@maambiscuits.com.lk</span></p>
+        </li>
+        <li>
+          <p>Export : <span>export@maambiscuits.com.lk</span> </p>
+        </li>
+      </ul>
+    </div>
+
   </div>
-  
-</div>
-</section> 
+</section>
+
+<script>
+  $(document).ready(function () {
+    LoadFeedBackTypes();
+
+    $('#TextBoxCountry').autocomplete({
+      source: countryList
+    });
+  });
+
+  function LoadFeedBackTypes() {
+    $.ajax({
+      url: '/GetFeedBackTypes',
+      type: 'get',
+      success: function (data) {
+        var options = '';
+        for (var x = 0; x < data.length; x++) {
+          if (x == 0) {
+            options += '<label class="radio-inline mr-3"><input type="radio" id="RadioButtonOne" name="FeedBackType" value="' + data[x]['id'] + '" class="mr-2" checked>' + data[x]['ItemName'] + '</label>';
+          }
+          else {
+            options += '<label class="radio-inline mr-3"><input type="radio" name="FeedBackType" value="' + data[x]['id'] + '" class="mr-2">' + data[x]['ItemName'] + '</label>';
+          }
+        }
+        $('#FeedBackTypes').html(options);
+      },
+      error: function (xhr, errorThrown) {
+        console.log(xhr, errorThrown);
+      }
+    });
+  }
+
+  function ClearAll(){
+    $('#TextBoxName').val('');
+    $('#TextBoxEmail').val('');
+    $('#TextBoxCountry').val('');
+    $('#TextBoxSubject').val('');
+    $('#TextAreaMessage').val('');
+    $("#RadioButtonOne").attr('checked', 'checked');
+  }
+
+  $('#ButtonSubmit').click(function () {
+    var Name = $('#TextBoxName').val();
+    var Email = $('#TextBoxEmail').val();
+    var Country = $('#TextBoxCountry').val();
+    var Subject = $('#TextBoxSubject').val();
+    var Message = $('#TextAreaMessage').val();
+    var FeedBackType = $('input[name=FeedBackType]:checked').val();
+
+    if (Name == '' || Email == '' || Country == '' || Subject == '' || Message == '') {
+      alertify.error("All Fields Must Be Filled!");
+      return;
+    }
+
+    $data = {"Name":Name,"Email":Email,"Country":Country,"Subject":Subject,"Message":Message,"FeedBackType":FeedBackType}
+    $.ajax({
+      type: 'post',
+      url: '/ContactUs',
+      data:$data,
+      beforeSend:function(){
+        alertify.warning("Validating Email!");
+      },
+      success: function (data) {
+        if (data.Type == "Success") {
+          alertify.success(data.Message);
+          ClearAll();
+          return;
+        }
+        alertify.error(data.Message);
+      }, error: function (xhr, errorThrown) {
+        console.log(xhr, errorThrown);
+      }
+    });
+
+
+  });
+
+
+  const countryList = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "American Samoa",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antarctica",
+    "Antigua and Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas (the)",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia (Plurinational State of)",
+    "Bonaire, Sint Eustatius and Saba",
+    "Bosnia and Herzegovina",
+    "Botswana",
+    "Bouvet Island",
+    "Brazil",
+    "British Indian Ocean Territory (the)",
+    "Brunei Darussalam",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cabo Verde",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Cayman Islands (the)",
+    "Central African Republic (the)",
+    "Chad",
+    "Chile",
+    "China",
+    "Christmas Island",
+    "Cocos (Keeling) Islands (the)",
+    "Colombia",
+    "Comoros (the)",
+    "Congo (the Democratic Republic of the)",
+    "Congo (the)",
+    "Cook Islands (the)",
+    "Costa Rica",
+    "Croatia",
+    "Cuba",
+    "Curaçao",
+    "Cyprus",
+    "Czechia",
+    "Côte d'Ivoire",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic (the)",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Eswatini",
+    "Ethiopia",
+    "Falkland Islands (the) [Malvinas]",
+    "Faroe Islands (the)",
+    "Fiji",
+    "Finland",
+    "France",
+    "French Guiana",
+    "French Polynesia",
+    "French Southern Territories (the)",
+    "Gabon",
+    "Gambia (the)",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Gibraltar",
+    "Greece",
+    "Greenland",
+    "Grenada",
+    "Guadeloupe",
+    "Guam",
+    "Guatemala",
+    "Guernsey",
+    "Guinea",
+    "Guinea-Bissau",
+    "Guyana",
+    "Haiti",
+    "Heard Island and McDonald Islands",
+    "Holy See (the)",
+    "Honduras",
+    "Hong Kong",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran (Islamic Republic of)",
+    "Iraq",
+    "Ireland",
+    "Isle of Man",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jersey",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Korea (the Democratic People's Republic of)",
+    "Korea (the Republic of)",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Lao People's Democratic Republic (the)",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macao",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands (the)",
+    "Martinique",
+    "Mauritania",
+    "Mauritius",
+    "Mayotte",
+    "Mexico",
+    "Micronesia (Federated States of)",
+    "Moldova (the Republic of)",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Montserrat",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands (the)",
+    "New Caledonia",
+    "New Zealand",
+    "Nicaragua",
+    "Niger (the)",
+    "Nigeria",
+    "Niue",
+    "Norfolk Island",
+    "Northern Mariana Islands (the)",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Palestine, State of",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines (the)",
+    "Pitcairn",
+    "Poland",
+    "Portugal",
+    "Puerto Rico",
+    "Qatar",
+    "Republic of North Macedonia",
+    "Romania",
+    "Russian Federation (the)",
+    "Rwanda",
+    "Réunion",
+    "Saint Barthélemy",
+    "Saint Helena, Ascension and Tristan da Cunha",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Martin (French part)",
+    "Saint Pierre and Miquelon",
+    "Saint Vincent and the Grenadines",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Sint Maarten (Dutch part)",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Georgia and the South Sandwich Islands",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "Sudan (the)",
+    "Suriname",
+    "Svalbard and Jan Mayen",
+    "Sweden",
+    "Switzerland",
+    "Syrian Arab Republic",
+    "Taiwan (Province of China)",
+    "Tajikistan",
+    "Tanzania, United Republic of",
+    "Thailand",
+    "Timor-Leste",
+    "Togo",
+    "Tokelau",
+    "Tonga",
+    "Trinidad and Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Turks and Caicos Islands (the)",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates (the)",
+    "United Kingdom of Great Britain and Northern Ireland (the)",
+    "United States Minor Outlying Islands (the)",
+    "United States of America (the)",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Venezuela (Bolivarian Republic of)",
+    "Viet Nam",
+    "Virgin Islands (British)",
+    "Virgin Islands (U.S.)",
+    "Wallis and Futuna",
+    "Western Sahara",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe",
+    "Åland Islands"
+  ];
+
+</script>
 
 
 {% endblock content %}
-
-
-
-
-
-
-
-
-

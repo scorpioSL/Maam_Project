@@ -80,11 +80,11 @@ class Department(db.Document):
 	
 class Feedback(db.Document):
 	Name=db.StringField()
-	TelNumber=db.StringField()
 	Country=db.StringField()
 	Email=db.StringField()
 	Message=db.StringField()
-	FeedbackTypeId=db.ReferenceField('FeedbackType')
+	Subject = db.StringField()
+	FeedbackType=db.ReferenceField('FeedbackType')
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
@@ -114,16 +114,22 @@ class Applicant(db.Document):
 class Distributor(db.Document):
 	DistributorName=db.StringField()
 	DistributorAddress=db.StringField()
-	DistributorContactNum=db.StringField()
+	DistributorContactNumber=db.StringField()
 	DistributorEmail=db.StringField()
 	InvestmentAmount=db.StringField()
-	Item=db.StringField()
-	ItemQuantity=db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
-	
+ 
+class DistributorHasProducts(db.Document):
+	Distributor = db.ReferenceField(Distributor)
+	FinishedGood = db.ReferenceField('FinishedGood')
+	Quantity = db.StringField()
+	Archived=db.BooleanField(default=False)
+	UserCreated=db.StringField()
+	DateCreated=db.StringField(default=str(datetime.datetime.now()))
+	DateLastmodified=db.StringField()
 
 class Supplier(db.Document):
 	SupplierName=db.StringField()
