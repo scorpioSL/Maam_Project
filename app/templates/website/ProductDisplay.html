@@ -123,7 +123,6 @@
           return;
         }
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
@@ -167,12 +166,10 @@
     fetch('/GetProducts/' + search).then((Response) => {
       Response.json().then((data) => {
         if (data.length === 0) {
-          debugger;
           $('#NoProduct').removeAttr('hidden');
           return;
         }
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
@@ -200,12 +197,10 @@
     fetch('/GetProducts/ByCategory/' + Category).then((Response) => {
       Response.json().then((data) => {
         if (data.length === 0) {
-          debugger;
           $('#NoProduct').removeAttr('hidden');
           return;
         }
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
