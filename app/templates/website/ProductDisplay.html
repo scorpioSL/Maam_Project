@@ -141,7 +141,7 @@
       NodeElement.removeChild(NodeElement.firstChild);
     }
 
-    const Markup = ['<template id="ProductTemplate">', '<div class="col-md-3 mt-3 animated fadeIn">', '<div class="card">', '<div class="view overlay">', '<img class="card-img-top" alt="Card image cap" id="Image">', '<a href="#!"><div class="mask rgba-white-slight"></div></a>', '</div>', '<div class="card-body"><!-- Title --><h5 class="card-title" id="title">Card title</h5><!-- Text --></div></div><!-- Card --></div></template>'].join('\n');
+    const Markup = ['<template id="ProductTemplate">', '<div class="col-md-3 mt-3 animated fadeIn">', '<div class="card">', '<div class="view overlay">', '<img class="card-img-top" alt="Card image cap" id="Image">', '<a href="#!"><div class="mask rgba-white-slight"></div></a>', '</div>', '<div class="card-body"><!-- Title --><h5 class="card-title" id="title">Card title</h5><div class="row"><div class="col-md-6"><p id="Unit"></p></div><div class="col-md-6"><p id="Price"></p></div></div><!-- Text --></div></div><!-- Card --></div></template>'].join('\n');
     document.getElementById('ProductDisplayRow').innerHTML = Markup;
   }
 
@@ -176,7 +176,7 @@
           let TemplateClone = Template.content.cloneNode(true);
           TemplateClone.querySelector('#Image').setAttribute('src', '/static' + data[i]['ItemImagePath']);
           TemplateClone.querySelector('#title').innerHTML = data[i]['ItemName'];
-          TemplateClone.querySelector('#unit').innerHTML = data[i]['ItemUnit']+'g';
+          TemplateClone.querySelector('#Unit').innerHTML = data[i]['ItemUnit']+'g';
           TemplateClone.querySelector('#Price').innerHTML = 'Rs '+data[i]['ItemPrice'];
           ProductDisplayRow.appendChild(TemplateClone);
         }
