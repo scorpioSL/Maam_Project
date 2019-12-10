@@ -2,53 +2,96 @@
 {% block content %}
 
 <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Distributor Request</h4>
-                </div>
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Distributor Request</h4>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid col-md-9 col-lg-10">
-            <div class="table-responsive">
-             <table class="table table-bordered table-hover">
-              <thead class="thead-dark ">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">NIC</th>
-                  <th scope="col">Phon Number</th>
-                  <th scope="col">Email</th>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid col-md-9 col-lg-10" id="Body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="TableDistributors">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Investment Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-              </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-          </tr>
-          <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-          </tr>
-          
-      </tbody>
-  </table>
-</div>
 
-</div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="TableDistributorsProducts">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-{% endblock content %}
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+            LoadDistributors();
+        });
+
+        function LoadDistributors() {
+            // Request Route
+            $.ajax({
+                url: '/GetDistributors',
+                type: 'get',
+                success: function (data) {
+                    $('#TableDistributorsProducts').hide();
+                    if (data.length == 0) {
+                        $('#TableDistributors').hide();
+                        $('#Body').html("<h4 class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
+                        return;
+                    }
+                    $('#TableDistributors').show();
+                    $.each(data, function (index, value) {
+                        $String = "<tr><td>" + value.Name + "</td><td>" + value.Address + "</td><td>" + value.ContactNumber + "</td><td>" + value.Email + "</td><td>" + value.InvestmentAmount + "</td><td><button class='btn btn-success' onclick='ViewData('{0}')'>View</button></td></tr>".format(value.id);
+                        $('#TableDistributors > tbody:last-child').append($String);
+                    });
+
+
+                }, error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+            });
+        }
+
+        String.prototype.format = function () {
+            var formatted = this;
+            for (var i = 0; i < arguments.length; i++) {
+                var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
+
+    </script>
+
+    {% endblock content %}

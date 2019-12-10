@@ -117,3 +117,12 @@ def Supplier_Application():
 		JsonResponse = {"Type": "Success", "Message": Message}
 		return jsonify(JsonResponse)
 	return render_template('website/Request/SupplierApplication.html')
+
+@RequestForms.route('/GetDistributors',methods = ['GET'])
+def GetDistributors():
+    DistributorsList = Distributor.objects(Archived = False).order_by('-_id')
+    data = []
+    for DistributorObj in DistributorsList:
+        obj = {"id":str(DistributorObj.id),"Name" : DistributorObj.DistributorName,"Address":DistributorObj.DistributorAddress,"ContactNumber":DistributorObj.DistributorContactNumber,"Email":DistributorObj.DistributorEmail,"InvestmentAmount":DistributorObj.InvestmentAmount}
+        data.append(obj)
+    return jsonify(data)
