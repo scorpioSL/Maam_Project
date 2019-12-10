@@ -137,7 +137,7 @@
   function FillTable() {
     $("#ProductTable > tbody").empty();
     $.each(TableList, function (index, value) {
-      $String = "<tr><td>" + value.ProductName + "</td><td>" + value.Quantity + "</><td><button class='btn btn-danger' onclick='DeleteFromArray(" + index + ")'>Delete</td></tr>";
+      $String = "<tr><td>" + value.ProductName + "</td><td>" + value.Quantity + "</><td><button class='btn btn-danger' onclick='DeleteFromArray(" + index + ")'>Delete</button></td></tr>";
       $('#ProductTable > tbody:last-child').append($String);
     });
   }

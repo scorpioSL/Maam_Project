@@ -126,3 +126,13 @@ def GetDistributors():
         obj = {"id":str(DistributorObj.id),"Name" : DistributorObj.DistributorName,"Address":DistributorObj.DistributorAddress,"ContactNumber":DistributorObj.DistributorContactNumber,"Email":DistributorObj.DistributorEmail,"InvestmentAmount":DistributorObj.InvestmentAmount}
         data.append(obj)
     return jsonify(data)
+
+@RequestForms.route('/GetProductListForDistributor',methods = ['POST'])
+def GetProductListForDistributor():
+    if request.method == 'POST':
+        ProductList = DistributorHasProducts.objects(Distributor = request.form['id'],Archived = False)
+        data = []
+        for Product in ProductList:
+            ProductObj = {"Name":Product.FinishedGood.ItemName,"Quantity":Product.Quantity}
+            data.append(ProductObj)
+        return jsonify(data)
