@@ -130,11 +130,13 @@ class Supplier(db.Document):
 	SupplierAddress=db.StringField()
 	SupplierLeadTime=db.StringField()
 	SupplierNic=db.StringField()
+	SupplierContactNumber = db.StringField()
+	SupplierEmail = db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
-	SupplierProductList = []
+	SupplierRowMaterial = []
 	
 class FinishedGood(db.Document):
 	ItemCode=db.StringField()
@@ -148,7 +150,6 @@ class FinishedGood(db.Document):
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	UserModified = db.StringField()
 	DateLastmodified=db.StringField()
-	Supplier = db.ReferenceField(Supplier)
 	
 
 class FinishedGoodCategory(db.Document):
@@ -157,4 +158,23 @@ class FinishedGoodCategory(db.Document):
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
-	
+ 
+
+class RowMaterials(db.Document):
+	RowMaterialDescription = db.StringField()
+	ItemCode = db.StringField()
+	Archived=db.BooleanField(default=False)
+	UserCreated=db.StringField()
+	DateCreated=db.StringField(default=str(datetime.datetime.now()))
+	DateLastmodified=db.StringField()
+	UserModified = db.StringField()
+ 
+class SupplierHasRowMaterials(db.Document):
+	Supplier = db.ReferenceField(Supplier)
+	RowMaterial = db.ReferenceField(RowMaterials)
+	Price = db.StringField()
+	Archived=db.BooleanField(default=False)
+	UserCreated=db.StringField()
+	DateCreated=db.StringField(default=str(datetime.datetime.now()))
+	DateLastmodified=db.StringField()
+	UserModified = db.StringField()

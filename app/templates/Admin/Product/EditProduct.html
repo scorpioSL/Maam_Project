@@ -30,6 +30,10 @@
         </form>
 
         <form id="UpdateProdcutForm">
+            <div class="form-group mt-4" hidden>
+                <input type="text" class="form-control" name="TextBoxItemId" id="TextBoxItemId"
+                    style="border-color: black">
+            </div>
             <div class="form-group mt-4">
                 <label for="exampleFormControlInput1">Item Code</label>
                 <input type="text" class="form-control" name="TextBoxItemCode" id="TextBoxItemCode"
@@ -112,6 +116,7 @@
                         success: function (data) {
                             console.log(data);
                             if (data.Message === "Success") {
+                                $('#TextBoxItemId').val(data.ItemID);
                                 $('#TextBoxItemCode').val(data.ItemCode);
                                 $('#TextBoxProductName').val(data.ItemName);
                                 $('#TextBoxUnit').val(data.Unit);
@@ -142,8 +147,7 @@
                 url: '/DeleteProduct/' + Param,
                 type: 'post',
                 success: function (data) {
-                    if(data.Message == "Success")
-                    {
+                    if (data.Type == "Success") {
                         alertify.success(data.Message);
                         ClearAll();
                         return;

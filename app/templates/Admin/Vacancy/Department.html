@@ -1,0 +1,62 @@
+{% extends "Admin/Dashboard/dashboardLayout.html" %}
+{% block content %}
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Add Department</h4>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid col-md-5 col-lg-6">
+        <form>
+            <div class="form-group">
+                <label>Add Department<span style="color: red">*</span></label>
+                <input type="text" class="form-control" style="border-color: black" required="">
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-dark mt-2 mb-4">Submit</button>
+
+        </form>
+
+
+        <!-- TABLE -->
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Department</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td><button type="button" class="btn btn-warning">Update</button>
+                    <button type="button" class="btn btn-danger ">Delete</button>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+
+
+        <!-- END TABLE -->
+
+    </div>
+
+
+
+    {% endblock content %}

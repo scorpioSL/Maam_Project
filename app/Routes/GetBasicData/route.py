@@ -23,6 +23,15 @@ def GetProductsDropdown():
         Data.append(obj)
     return(jsonify(Data))
 
+@GetBasicData.route('/GetRowMaterialsDropDown',methods = ['GET'])
+def GetRowMaterialsDropdown():
+    RowMaterialList = RowMaterials.objects(Archived = False)
+    Data = []
+    for RowMaterial in RowMaterialList:
+        obj = {"id":str(RowMaterial.id),"ItemName":RowMaterial.RowMaterialDescription}
+        Data.append(obj)
+    return(jsonify(Data))
+
 
 
 @GetBasicData.route('/GetProducts/<Search>',methods = ['GET','POST'])
@@ -45,7 +54,7 @@ def GetProducts(Search = None,Category = None):
     return(jsonify(Data))
 
 @GetBasicData.route('/GetProducts/AutoComplete/<SearchingText>',methods = ['GET','POST'])
-def GeTProductAutoComplete(SearchingText = None):
+def GetProductAutoComplete(SearchingText = None):
     Data = []
     if SearchingText:
         Param = str.format('.*{}.*',SearchingText)
@@ -85,5 +94,5 @@ def SetProductAutoCompleteSelected(ProductName):
         if FinishedGoodCategoryObj.CatDescription == Product.ItemCategory.CatDescription:
             break
         index = index + 1
-    obj = {"Message":"Success","ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
+    obj = {"Message":"Success","ItemID":str(Product.id),"ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
     return jsonify(obj)

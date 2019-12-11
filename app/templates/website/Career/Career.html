@@ -2,13 +2,6 @@
 {% extends "website/homeLayout.html" %}
 {% block content %}
 
-<style>
-  ul#horizontal-list li {
-    display: inline;
-  }
-</style>
-
-
 <section class="page-section about-heading">
     <div class="container">
       <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{{url_for('static',filename='img/about.jpg')}}" alt="">
@@ -49,7 +42,7 @@
 
        <!-- bottom nav -->
     <div>
-        <div id="menu-outer" style="margin-top:10px">
+        <div id="menu-outer">
   <div class="table">
     <ul id="horizontal-list">
         <li><a href="#" href="{{url_for('Vacancy.view_Career')}}">Career Overview <span>|</span></a></li>

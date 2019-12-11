@@ -1,15 +1,6 @@
 {% extends "website/homeLayout.html" %}
 {% block content %}
 
-<style>
-    .white{
-        color: white
-    }
-
-    ul#horizontal-list li {
-    display: inline;
-  }
-</style>
 
 <div class="container contact-section my-5 col-lg-8 col-md-6">
         <form class="border border-light p-5" style="font-weight: 500">
@@ -55,7 +46,7 @@
             </form>
         <!-- bottom nav -->
     <div>
-            <div id="menu-outer" style="margin-top:10px">
+            <div id="menu-outer" >
       <div class="table">
         <ul id="horizontal-list">
           <li><a href="#" href="{{url_for('Vacancy.view_Career')}}">Career Overview <span>|</span></a></li>

@@ -23,6 +23,12 @@ def edit_Vacancy():
 def view_Applicant():
 	return render_template('Admin/Vacancy/Applicant.html')
 
+
+# ******************---Add Department---*****************************
+@vacancy.route('/Add_Department')
+def add_Department():
+	return render_template('Admin/Vacancy/Department.html')
+
 # ------------------------------------------------------------------
 						# WEBSITE FUNCTIONS
 # ------------------------------------------------------------------
