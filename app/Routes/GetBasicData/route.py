@@ -42,6 +42,16 @@ def GetFeedBackTypes():
     return(jsonify(Data))
 
 
+@GetBasicData.route('/GetDepartments',methods = ['GET'])
+def GetDepartments():
+    DepartmentList = Department.objects(Archived = False)
+    Data = []
+    for DepartmentObj in DepartmentList:
+        obj = {"id":str(DepartmentObj.id),"ItemName":DepartmentObj.DepDescription}
+        Data.append(obj)
+    return(jsonify(Data))
+
+
 
 @GetBasicData.route('/GetProducts/<Search>',methods = ['GET','POST'])
 @GetBasicData.route('/GetProducts',methods = ['GET'])

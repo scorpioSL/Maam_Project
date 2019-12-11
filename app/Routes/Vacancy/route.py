@@ -1,4 +1,7 @@
 from flask import *
+from app import app
+from app.MyFunctions import SaveImage
+from app.database.models import Department,Vacancy
 
 vacancy = Blueprint('Vacancy', __name__)
 
@@ -9,6 +12,11 @@ vacancy = Blueprint('Vacancy', __name__)
 # ******************---Add Vacancy---*****************************
 @vacancy.route('/Vacancy')
 def add_Vacancy():
+    if request.method == 'POST':
+        JobTitle = request.form['JobTitle']
+        DepartmentInput = request.form['DropDownListDepartment']
+        FileFieldJobAdvertistment = request.form['FileFieldJobAdvertistment']
+        return Department
 	return render_template('Admin/Vacancy/vacancy.html')
 
 

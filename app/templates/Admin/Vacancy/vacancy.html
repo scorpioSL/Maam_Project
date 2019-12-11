@@ -2,51 +2,91 @@
 {% block content %}
 
 <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Post Vacancy</h4>
-                </div>
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Post Vacancy</h4>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid col-md-6 col-lg-8">
-            <form>
-                            <div class="form-group">
-                              <label > Job Tillte<span style="color: red">*</span></label>
-                              <input type="text" class="form-control" style="border-color: black" required="" >
-                          </div>
-                
-                          <div class="form-group">
-                                <label for="exampleFormControlInput1">Department</label>
-                        <select class="custom-select custom-select-sm "style="border-color: black">
-                            <option selected>Select</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                          </select>
-                        </div>
-                  
-                          <div class="form-group">
-                              <label>Job Advertistment</label>
-                              <input type="file" class="form-control-file" id="exampleFormControlFile1" style="border-color: black">
-                          </div>
-                  
-                          <button type="submit" class="btn btn-dark mt-2" >Submit</button>
-                  
-                      </form>
-                  
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid col-md-6 col-lg-8">
+        <form id="FormPostVacancy">
+            <div class="form-group">
+                <label> Job Tillte<span style="color: red">*</span></label>
+                <input type="text" class="form-control" name="JobTitle" style="border-color: black" required="">
+            </div>
 
-        </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Department</label>
+                <select class="custom-select custom-select-sm" id="DropDownListDepartment" name="DropDownListDepartment" style="border-color: black">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Job Advertistment</label>
+                <input type="file" class="form-control-file" name="FileFieldJobAdvertistment" style="border-color: black">
+            </div>
+            <button type="submit" name="ButtonSubmit" class="btn btn-dark mt-2">Submit</button>
+        </form>
 
 
+    </div>
 
-{% endblock content %}
+    <script>
+
+        $(document).ready(function(){
+            LoadDropDown();
+        });
+
+        function LoadDropDown() {
+            $.ajax({
+                type: 'get',
+                url: '/GetDepartments',
+                success: function (data) {
+                    var options = '';
+                    for (var x = 0; x < data.length; x++) {
+                        options += '<option value="' + data[x]['id'] + '">' + data[x]['ItemName'] + '</option>';
+                    }
+                    $('#DropDownListDepartment').html(options);
+                },
+                error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+            });
+        }
+
+
+        $("#FormPostVacancy").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: '/Vacancy',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    if (data.Type == "Success") {
+                        $("form").trigger("reset");
+                        alertify.success(data.Message);
+                    }
+                    else {
+                        alertify.error(data.Message);
+                    }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    </script>
+
+    {% endblock content %}

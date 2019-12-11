@@ -29,6 +29,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Investment Amount</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,15 +65,15 @@
                 url: '/GetDistributors',
                 type: 'get',
                 success: function (data) {
-                    $('#TableDistributorsProducts').hide();
+                    $('#TableDistributorsProducts').hide("slow");
                     if (data.length == 0) {
-                        $('#TableDistributors').hide();
-                        $('#Body').html("<h4 class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
+                        $('#TableDistributors').hide("slow");
+                        $('#Body').html("<h4 id='NoData' class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
                         return;
                     }
-                    $('#TableDistributors').show();
+                    $('#TableDistributors').show("slow");
                     $.each(data, function (index, value) {
-                        $String = "<tr class='item'><td>" + value.Name + "</td><td>" + value.Address + "</td><td>" + value.ContactNumber + "</td><td>" + value.Email + "</td><td>" + value.InvestmentAmount + "</td><td><button id='" + index + "' class='btn btn-success' onclick='ViewData(`" + value.id + "`,this)'>View</button></td></tr>";
+                        $String = "<tr class='item'><td>" + value.Name + "</td><td>" + value.Address + "</td><td>" + value.ContactNumber + "</td><td>" + value.Email + "</td><td>" + value.InvestmentAmount + "</td><td><button id='" + index + "' class='btn btn-success' onclick='ViewData(`" + value.id + "`,this)'>View</button></td><td><button class='btn btn-danger' onclick='Delete(`" + value.id + "`,this,`" + value.Email + "`)'>Delete</button></td></tr>";
                         $('#TableDistributors > tbody:last-child').append($String);
                     });
 
@@ -95,18 +96,18 @@
                             $String = "<tr><td>" + value.Name + "</td><td>" + value.Quantity + "</td></tr>";
                             $('#TableDistributorsProducts > tbody:last-child').append($String);
                         });
-                        $('#TableDistributorsProducts').show();
+                        $('#TableDistributorsProducts').show("slow");
                         $(element).removeClass("btn-success");
                         $(element).addClass("btn-warning");
 
                         $("#TableDistributors > tbody tr").each(function () {
                             $this = $(this);
                             var button = $this.find("button");
-                            if (button[0]  != element) {
+                            if (button[0] != element) {
                                 $(button).removeClass("btn-warning");
                                 $(button).addClass("btn-success");
                             }
-                            else{
+                            else {
                                 $(button).removeClass("btn-success");
                                 $(button).addClass("btn-warning");
                             }
@@ -117,7 +118,7 @@
 
 
 
-                    $('#TableDistributorsProducts').hide();
+                    $('#TableDistributorsProducts').hide("slow");
                 }, error: function (xhr, errorThrown) {
                     console.log(xhr, errorThrown);
                 }
@@ -133,6 +134,43 @@
             }
             return formatted;
         };
+
+
+        function Delete(objectID, element, Email) {
+            alertify.confirm('Delete', 'Do you want to delete ' + Email + ' record?', function () {
+                $.ajax({
+                    url: '/DeleteDistributor',
+                    type: 'post',
+                    data: { "id": objectID },
+                    success: function (data) {
+                        // $("#TableDistributors tr td:contains('" + objectID + "')").remove();
+                        $("#TableDistributors > tbody tr").each(function () {
+                            $this = $(this);
+                            var button = $this.find("button");
+                            console.log(button[1]);
+                            console.log(element);
+                            if (button[1] == element) {
+                                $this.remove();
+                            }
+                        });
+                        $('#TableDistributorsProducts').hide("slow");
+                        if($('#TableDistributors > tbody tr').length == 0)
+                        {
+                            $('#TableDistributors').hide("slow");
+                            $('#Body').html("<h4 id='NoData' class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
+                        }
+                    },
+                    error: function (xhr, errorThrown) {
+                        console.log(xhr, errorThrown);
+                    }
+                });
+            }
+                , function () {
+                    alertify.error('Cancel')
+                }
+            );
+
+        }
 
     </script>
 

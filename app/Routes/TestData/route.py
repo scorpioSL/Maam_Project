@@ -22,3 +22,10 @@ def AddFeedBackTypes():
     FeedbackType(Description = "Inquiry").save()
     FeedbackType(Description = "Other").save()
     return "Done"
+
+@TestData.route('/AddDepartment',methods = ['GET'])
+def AddDepartments():
+    Department(DepDescription = "HR").save()
+    Department(DepDescription = "Financial").save()
+    Department(DepDescription = "Product").save()
+    return "Done"

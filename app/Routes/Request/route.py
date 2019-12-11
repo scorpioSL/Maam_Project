@@ -120,19 +120,68 @@ def Supplier_Application():
 
 @RequestForms.route('/GetDistributors',methods = ['GET'])
 def GetDistributors():
-    DistributorsList = Distributor.objects(Archived = False).order_by('-_id')
-    data = []
-    for DistributorObj in DistributorsList:
-        obj = {"id":str(DistributorObj.id),"Name" : DistributorObj.DistributorName,"Address":DistributorObj.DistributorAddress,"ContactNumber":DistributorObj.DistributorContactNumber,"Email":DistributorObj.DistributorEmail,"InvestmentAmount":DistributorObj.InvestmentAmount}
-        data.append(obj)
-    return jsonify(data)
+	DistributorsList = Distributor.objects(Archived = False).order_by('-_id')
+	data = []
+	for DistributorObj in DistributorsList:
+		obj = {"id":str(DistributorObj.id),"Name" : DistributorObj.DistributorName,"Address":DistributorObj.DistributorAddress,"ContactNumber":DistributorObj.DistributorContactNumber,"Email":DistributorObj.DistributorEmail,"InvestmentAmount":DistributorObj.InvestmentAmount}
+		data.append(obj)
+	return jsonify(data)
 
 @RequestForms.route('/GetProductListForDistributor',methods = ['POST'])
 def GetProductListForDistributor():
-    if request.method == 'POST':
-        ProductList = DistributorHasProducts.objects(Distributor = request.form['id'],Archived = False)
-        data = []
-        for Product in ProductList:
-            ProductObj = {"Name":Product.FinishedGood.ItemName,"Quantity":Product.Quantity}
-            data.append(ProductObj)
-        return jsonify(data)
+	if request.method == 'POST':
+		ProductList = DistributorHasProducts.objects(Distributor = request.form['id'],Archived = False)
+		data = []
+		for Product in ProductList:
+			ProductObj = {"Name":Product.FinishedGood.ItemName + " - " + Product.FinishedGood.ItemUnit+"g","Quantity":Product.Quantity}
+			data.append(ProductObj)
+		return jsonify(data)
+	
+@RequestForms.route('/DeleteDistributor',methods = ['POST'])
+def DeleteDistributor():
+	if request.method == 'POST':
+		objectID = request.form['id']
+		DistributorObj = Distributor.objects(id = objectID,Archived = False).first()
+		if DistributorObj:
+			Distributor(id = DistributorObj.id).update(set__Archived = True)
+			Message = "Deleted!"
+			JsonResponse = {"Type": "Success", "Message": Message}
+			return jsonify(JsonResponse)
+		Message = "An Error Occured!, Please contact Developers!"
+		JsonResponse = {"Type": "Error", "Message": Message}
+		return jsonify(JsonResponse)
+
+
+
+@RequestForms.route('/GetSuppliers',methods = ['GET'])
+def GetSuppliers():
+	SuppliersList = Supplier.objects(Archived = False).order_by('-_id')
+	data = []
+	for SupplierObj in SuppliersList:
+		obj = {"id":str(SupplierObj.id),"Name" : SupplierObj.SupplierName,"Address":SupplierObj.SupplierAddress,"ContactNumber":SupplierObj.SupplierContactNumber,"Email":SupplierObj.SupplierEmail}
+		data.append(obj)
+	return jsonify(data)
+
+@RequestForms.route('/GetRowMaterialListForSupplier',methods = ['POST'])
+def GetRowMaterialListForSupplier():
+	if request.method == 'POST':
+		RowMaterialsList = SupplierHasRowMaterials.objects(Supplier = request.form['id'],Archived = False)
+		data = []
+		for RowMaterialLoop in RowMaterialsList:
+			RowMaterialObj = {"Name":RowMaterialLoop.RowMaterial.RowMaterialDescription,"Price":RowMaterialLoop.Price}
+			data.append(RowMaterialObj)
+		return jsonify(data)
+	
+@RequestForms.route('/DeleteSupplier',methods = ['POST'])
+def DeleteSupplier():
+	if request.method == 'POST':
+		objectID = request.form['id']
+		SupplierObj = Supplier.objects(id = objectID,Archived = False).first()
+		if SupplierObj:
+			Supplier(id = SupplierObj.id).update(set__Archived = True)
+			Message = "Deleted!"
+			JsonResponse = {"Type": "Success", "Message": Message}
+			return jsonify(JsonResponse)
+		Message = "An Error Occured!, Please contact Developers!"
+		JsonResponse = {"Type": "Error", "Message": Message}
+		return jsonify(JsonResponse)
