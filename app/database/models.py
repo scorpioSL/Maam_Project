@@ -69,6 +69,7 @@ class Vacancy(db.Document):
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
+	UserModified = db.StringField()
 	
 
 class Department(db.Document):
