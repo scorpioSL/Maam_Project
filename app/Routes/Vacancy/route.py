@@ -18,8 +18,6 @@ def add_Vacancy():
         FileFieldJobAdvertistment = request.form['FileFieldJobAdvertistment']
         return Department
 	return render_template('Admin/Vacancy/vacancy.html')
-
-
 # ****************---Edit Vacancy Details---************************
 @vacancy.route('/Edit_Vacancy')
 def edit_Vacancy():
