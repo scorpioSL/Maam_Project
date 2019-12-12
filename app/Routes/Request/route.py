@@ -39,12 +39,12 @@ def Distributor_Application():
 		InvestmentAmount = request.form['InvestmentAmount']
 		ProductList = json.loads(request.form['ProductList'])
 
-		is_valid = validate_email(Email,verify=True)
+		# is_valid = validate_email(Email,verify=True)
   
-		if not is_valid:
-			Message = "Invalid Email!"
-			JsonResponse = {"Type": "Error", "Message": Message}
-			return jsonify(JsonResponse)
+		# if not is_valid:
+		# 	Message = "Invalid Email!"
+		# 	JsonResponse = {"Type": "Error", "Message": Message}
+		# 	return jsonify(JsonResponse)
   
 		if Name == "" or Address == "" or ContactNumber == "" or Email =="" or InvestmentAmount == "" or len(ProductList) == 0:
 			Message = "All Fields Must Be Filled!"
@@ -87,12 +87,12 @@ def Supplier_Application():
 		Email = request.form['Email']
 		RowMaterialList = json.loads(request.form['RowMaterialList'])
   
-		is_valid = validate_email(Email,verify=True)
+		# is_valid = validate_email(Email,verify=True)
   
-		if not is_valid:
-			Message = "Invalid Email!"
-			JsonResponse = {"Type": "Error", "Message": Message}
-			return jsonify(JsonResponse)
+		# if not is_valid:
+		# 	Message = "Invalid Email!"
+		# 	JsonResponse = {"Type": "Error", "Message": Message}
+		# 	return jsonify(JsonResponse)
   
 		if Name == "" or Address == "" or ContactNumber == "" or Email =="" or len(RowMaterialList) == 0:
 			Message = "All Fields Must Be Filled!"
