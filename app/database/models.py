@@ -63,7 +63,7 @@ class PostType(db.Document):
 
 class Vacancy(db.Document):
 	Tittle=db.StringField()
-	DepartmentId=db.ReferenceField('Department')
+	Department=db.ReferenceField('Department')
 	Poster=db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()

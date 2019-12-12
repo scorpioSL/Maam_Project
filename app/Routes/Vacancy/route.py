@@ -10,13 +10,28 @@ vacancy = Blueprint('Vacancy', __name__)
 # ------------------------------------------------------------------
 
 # ******************---Add Vacancy---*****************************
-@vacancy.route('/Vacancy')
+@vacancy.route('/Vacancy',methods = ['GET','POST'])
 def add_Vacancy():
-    if request.method == 'POST':
-        JobTitle = request.form['JobTitle']
-        DepartmentInput = request.form['DropDownListDepartment']
-        FileFieldJobAdvertistment = request.form['FileFieldJobAdvertistment']
-        return Department
+	if request.method == 'POST':
+		JobTitle = request.form['JobTitle']
+		DepartmentInput = request.form['DropDownListDepartment']
+		FileFieldJobAdvertistment = request.files['FileFieldJobAdvertistment']
+		DepartmentObj = Department.objects(id = DepartmentInput).first()
+		if JobTitle == "" or DepartmentInput == "" or not FileFieldJobAdvertistment or FileFieldJobAdvertistment.filename == "":
+			Message = "All data must be filled!"
+			JsonResponse = {"Type":"Error","Message":Message}
+			return jsonify(JsonResponse)
+
+		if not DepartmentObj:
+			Message = "Error, Please contact the developers.(Department 404)"
+			JsonResponse = {"Type":"Error","Message":Message}
+			return jsonify(JsonResponse)
+		ImageFolderPath = '/static/Images/Vacancy/'
+		Path = SaveImage(app, current_app, FileFieldJobAdvertistment,ImageFolderPath, 'VC_')
+		Vacancy(Tittle = JobTitle,Department = DepartmentObj,Poster = Path).save()
+		Message = "Successfully Saved!"
+		JsonResponse = {"Type":"Success","Message":Message}
+		return jsonify(JsonResponse)
 	return render_template('Admin/Vacancy/vacancy.html')
 
 
