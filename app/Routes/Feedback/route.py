@@ -32,12 +32,12 @@ def ContactUs():
 		Message = request.form['Message']
 		FeedBackType = request.form['FeedBackType']
 		
-		is_valid = validate_email(Email,verify=True)
+		# is_valid = validate_email(Email,verify=True)
   
-		if not is_valid:
-			Message = "Invalid Email!"
-			JsonResponse = {"Type": "Error", "Message": Message}
-			return jsonify(JsonResponse)
+		# if not is_valid:
+		# 	Message = "Invalid Email!"
+		# 	JsonResponse = {"Type": "Error", "Message": Message}
+		# 	return jsonify(JsonResponse)
 
 		if Name == "" or Email == "" or Country == "" or Subject == "" or Message == "":
 			Message = "All Fields Must Be Filled!"
