@@ -85,6 +85,18 @@ def GetProductAutoComplete(SearchingText = None):
             obj = {'ItemCode':Product.ItemCode,'ItemName':Product.ItemName,'ItemUnit':Product.ItemUnit,'ItemPrice':Product.ItemPrice,'ItemCategory':Product.ItemCategory.CatDescription,'ItemImagePath':Product.ItemImagePath}
             Data.append(obj)
         return jsonify(Data)
+    
+@GetBasicData.route('/Vacancy/AutoComplete/<SearchingText>',methods = ['GET','POST'])
+def GetVacancyAutoComplete(SearchingText = None):
+    Data = []
+    if SearchingText:
+        Param = str.format('.*{}.*',SearchingText)
+        Regex = re.compile(Param,re.IGNORECASE)
+        Vacancies = Vacancy.objects(Archived = False,Tittle = Regex)
+        for VacancyObj in Vacancies:
+            obj = {'Title':VacancyObj.Tittle,'Department':VacancyObj.Department.DepDescription,'Poster':VacancyObj.Poster}
+            Data.append(obj)
+        return jsonify(Data)
 
 
 @GetBasicData.route('/GetNewReleases',methods = ['GET'])
@@ -116,4 +128,20 @@ def SetProductAutoCompleteSelected(ProductName):
             break
         index = index + 1
     obj = {"Message":"Success","ItemID":str(Product.id),"ItemCode":Product.ItemCode,"ItemName":Product.ItemName,"Unit":Product.ItemUnit,"Price":Product.ItemPrice,"ItemCategoryIndex":index,"ImagePath":Product.ItemImagePath}
+    return jsonify(obj)
+
+@GetBasicData.route('/SetVacancyAutocompleteSelected/<VacancyTitle>',methods = ['POST','GET'])
+@login_required
+def SetVacancyAutoCompleteSelected(VacancyTitle):
+    VacancyObj = Vacancy.objects(Archived = False,Tittle = VacancyTitle).first()
+    if not VacancyObj:
+        obj = {"Message":"Error"}
+        return jsonify(obj)
+    Departments = Department.objects(Archived = False)
+    index = 0
+    for DepartmentObj in Departments:
+        if DepartmentObj.DepDescription == VacancyObj.Department.DepDescription:
+            break
+        index = index + 1
+    obj = {"Message":"Success","ItemID":str(VacancyObj.id),"Title":VacancyObj.Tittle,"DepartmentIndex":index,"Poster":VacancyObj.Poster}
     return jsonify(obj)

@@ -101,15 +101,15 @@ def edit_Product():
 @product.route('/DeleteProduct/<ItemCode>',methods = ['GET','POST'])
 @login_required
 def DeleteProduct(ItemCode):
-    DeleteProduct = FinishedGood.objects(ItemCode = ItemCode,Archived = False).first()
-    if not DeleteProduct:
-        Message = "Product not found!"
-        JsonResponse = {"Type":"Error","Message":Message}
-        return jsonify(JsonResponse)
-    FinishedGood(id = DeleteProduct.id).update(set__Archived = True)
-    Message = "Success"
-    JsonResponse = {"Type":"Success","Message":Message}
-    return jsonify(JsonResponse)
+	DeleteProduct = FinishedGood.objects(ItemCode = ItemCode,Archived = False).first()
+	if not DeleteProduct:
+		Message = "Product not found!"
+		JsonResponse = {"Type":"Error","Message":Message}
+		return jsonify(JsonResponse)
+	FinishedGood(id = DeleteProduct.id).update(set__Archived = True)
+	Message = "Success"
+	JsonResponse = {"Type":"Success","Message":Message}
+	return jsonify(JsonResponse)
 
 
 # ****************---Add new Category---************************
