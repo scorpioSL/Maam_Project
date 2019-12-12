@@ -19,7 +19,7 @@ def GetProductsDropdown():
     Products = FinishedGood.objects(Archived = False)
     Data = []
     for Product in Products:
-        obj = {"id":str(Product.id),"ItemName":Product.ItemName}
+        obj = {"id":str(Product.id),"ItemName":Product.ItemName + " - " + Product.ItemUnit + "g"}
         Data.append(obj)
     return(jsonify(Data))
 
@@ -29,6 +29,25 @@ def GetRowMaterialsDropdown():
     Data = []
     for RowMaterial in RowMaterialList:
         obj = {"id":str(RowMaterial.id),"ItemName":RowMaterial.RowMaterialDescription}
+        Data.append(obj)
+    return(jsonify(Data))
+
+@GetBasicData.route('/GetFeedBackTypes',methods = ['GET'])
+def GetFeedBackTypes():
+    FeedbackTypeList = FeedbackType.objects(Archived = False)
+    Data = []
+    for FeedBackTypeObj in FeedbackTypeList:
+        obj = {"id":str(FeedBackTypeObj.id),"ItemName":FeedBackTypeObj.Description}
+        Data.append(obj)
+    return(jsonify(Data))
+
+
+@GetBasicData.route('/GetDepartments',methods = ['GET'])
+def GetDepartments():
+    DepartmentList = Department.objects(Archived = False)
+    Data = []
+    for DepartmentObj in DepartmentList:
+        obj = {"id":str(DepartmentObj.id),"ItemName":DepartmentObj.DepDescription}
         Data.append(obj)
     return(jsonify(Data))
 
@@ -43,10 +62,12 @@ def GetProducts(Search = None,Category = None):
     elif Category and not Search:
         ItemCategory = FinishedGoodCategory.objects(id = Category).first()
         Products = FinishedGood.objects(Archived = False,ItemCategory = ItemCategory)
+        print(Products)
     elif Search and not Category:
         Param = str.format('.*{}.*',Search)
         Regex = re.compile(Param,re.IGNORECASE)
         Products = FinishedGood.objects(Archived = False,ItemName = Regex)
+        print(Products)
     Data = []
     for Product in Products:
         obj = {'ItemCode':Product.ItemCode,'ItemName':Product.ItemName,'ItemUnit':Product.ItemUnit,'ItemPrice':Product.ItemPrice,'ItemCategory':Product.ItemCategory.CatDescription,'ItemImagePath':Product.ItemImagePath}

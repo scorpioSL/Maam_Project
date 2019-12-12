@@ -1,32 +1,176 @@
 {% extends "Admin/Dashboard/dashboardLayout.html" %}
 {% block content %}
-    
-    <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Supplier Request</h4>
-                </div>
+
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Supplier Request</h4>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid col-md-9 col-lg-10">
-            .
-            .
-            .
-            .
-            .
-            .
-         
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid col-md-9 col-lg-10">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="TableSuppliers">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Email</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-         </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="TableSupplierRowMaterials">
+                <thead class="thead-dark ">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price(1 kg)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-{% endblock content %}
+
+    </div>
+
+
+    <script>
+
+        $(document).ready(function () {
+            LoadSuppliers();
+        });
+
+        function LoadSuppliers() {
+            // Request Route
+            $.ajax({
+                url: '/GetSuppliers',
+                type: 'get',
+                success: function (data) {
+                    $('#TableSupplierRowMaterials').hide("slow");
+                    if (data.length == 0) {
+                        $('#TableSuppliers').hide("slow");
+                        $('#Body').html("<h4 id='NoData' class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
+                        return;
+                    }
+                    $('#TableSuppliers').show("slow");
+                    $.each(data, function (index, value) {
+                        $String = "<tr class='item'><td>" + value.Name + "</td><td>" + value.Address + "</td><td>" + value.ContactNumber + "</td><td>" + value.Email + "</td><td><button id='" + index + "' class='btn btn-success' onclick='ViewData(`" + value.id + "`,this)'>View</button></td><td><button class='btn btn-danger' onclick='Delete(`" + value.id + "`,this,`" + value.Email + "`)'>Delete</button></td></tr>";
+                        $('#TableSuppliers > tbody:last-child').append($String);
+                    });
+
+
+                }, error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+            });
+        }
+
+        function ViewData(id, element) {
+            $.ajax({
+                type: 'post',
+                data: { "id": id },
+                url: '/GetRowMaterialListForSupplier',
+                success: function (data) {
+                    $('#TableSupplierRowMaterials').hide("slow");
+                    $("#TableSupplierRowMaterials > tbody").empty();
+                    if (data.length != 0) {
+                        $.each(data, function (index, value) {
+                            $String = "<tr><td>" + value.Name + "</td><td>" + value.Price + "</td></tr>";
+                            $('#TableSupplierRowMaterials > tbody:last-child').append($String);
+                        });
+                        $('#TableSupplierRowMaterials').show("slow");
+                        $(element).removeClass("btn-success");
+                        $(element).addClass("btn-warning");
+
+                        $("#TableSuppliers > tbody tr").each(function () {
+                            $this = $(this);
+                            var button = $this.find("button");
+                            if (button[0] != element) {
+                                $(button).removeClass("btn-warning");
+                                $(button).addClass("btn-success");
+                            }
+                            else {
+                                $(button).removeClass("btn-success");
+                                $(button).addClass("btn-warning");
+                            }
+                        });
+
+                        return;
+                    }
+
+
+
+                    $('#TableSupplierRowMaterials').hide("slow");
+                }, error: function (xhr, errorThrown) {
+                    console.log(xhr, errorThrown);
+                }
+
+            });
+        }
+
+        String.prototype.format = function () {
+            var formatted = this;
+            for (var i = 0; i < arguments.length; i++) {
+                var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
+
+
+        function Delete(objectID, element, Email) {
+            alertify.confirm('Delete', 'Do you want to delete ' + Email + ' record?', function () {
+                $.ajax({
+                    url: '/DeleteSupplier',
+                    type: 'post',
+                    data: { "id": objectID },
+                    success: function (data) {
+                        $("#TableSuppliers > tbody tr").each(function () {
+                            $this = $(this);
+                            var button = $this.find("button");
+                            console.log(button[1]);
+                            console.log(element);
+                            if (button[1] == element) {
+                                $this.remove();
+                            }
+                        });
+                        $('#TableSupplierRowMaterials').hide("slow");
+                        if ($('#TableSuppliers > tbody tr').length == 0) {
+                            $('#TableSuppliers').hide("slow");
+                            $('#Body').html("<h4 id='NoData' class='text-danger ml-4 mt-5'>No Distributor Requests!</h4>");
+                        }
+                    },
+                    error: function (xhr, errorThrown) {
+                        console.log(xhr, errorThrown);
+                    }
+                });
+            }
+                , function () {
+                    alertify.error('Cancel')
+                }
+            );
+
+        }
+
+    </script>
+
+    {% endblock content %}
