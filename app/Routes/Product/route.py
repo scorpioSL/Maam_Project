@@ -101,8 +101,21 @@ def edit_Product():
 
 # ****************---Add new Category---************************
 @product.route('/Add_category')
+@login_required
 def add_category():
 	return render_template('Admin/Product/AddCategory.html')
+
+# ****************---Add Department---************************
+@product.route('/Add_department')
+@login_required
+def add_category():
+	return render_template('Admin/Product/AddCategory.html')
+
+# ****************---Add new Rawmaterial---************************
+@product.route('/Add_Rawmaterial')
+@login_required
+def Add_Rawmaterial():
+	return render_template('Admin/Product/AddRawmaterial.html')
 
 
 

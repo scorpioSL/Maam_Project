@@ -64,7 +64,7 @@
   </header>
   <!--Main Navigation-->
   <!--Navbar -->
-  <nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark " style="background-color: #0f2b72; font-family: 'Courgette', cursive; font-size: 19px">
+  <nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark " style="background-color: #0f2b72; font-size: 19px">
     <a class="navbar-brand" href=""><img  src="{{url_for('static',filename='img/maam logo.png') }}" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
     aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,13 +112,11 @@
 </li>
 <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-  aria-haspopup="true" aria-expanded="false">PARTNERS
+  aria-haspopup="true" aria-expanded="false">INQUIRY
 </a>
 <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-  <a class="dropdown-item" href="#">Private Label Production</a>
   <a class="dropdown-item" href="{{url_for('requestForms.Supplier_Application')}}">Suppliers</a>
   <a class="dropdown-item" href="{{url_for('requestForms.Distributor_Application')}}">Distributors</a>
-  <a class="dropdown-item" href="#">Exports</a>
 </div>
 </li>
 <li class="nav-item">

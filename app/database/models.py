@@ -27,7 +27,6 @@ class UserType(db.Document):
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
 	
-
 class UserLog(db.Document):
 	User=db.StringField()
 	Action = db.StringField()
@@ -38,8 +37,6 @@ class UserLog(db.Document):
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
 	
-
-
 class Post(db.Document):
 	PostTittle=db.StringField()
 	PostSubTitle = db.StringField()
@@ -91,7 +88,6 @@ class Feedback(db.Document):
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
 	
-
 class FeedbackType(db.Document):
 	Description=db.StringField()
 	Archived=db.BooleanField(default=False)
@@ -158,7 +154,6 @@ class FinishedGood(db.Document):
 	UserModified = db.StringField()
 	DateLastmodified=db.StringField()
 	
-
 class FinishedGoodCategory(db.Document):
 	CatDescription=db.StringField()
 	Archived=db.BooleanField(default=False)
@@ -166,7 +161,6 @@ class FinishedGoodCategory(db.Document):
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))
 	DateLastmodified=db.StringField()
  
-
 class RowMaterials(db.Document):
 	RowMaterialDescription = db.StringField()
 	ItemCode = db.StringField()

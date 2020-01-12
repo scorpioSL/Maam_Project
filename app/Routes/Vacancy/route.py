@@ -99,6 +99,16 @@ def delete_Vacancy(VacancyId):
 def view_Applicant():
 	return render_template('Admin/Vacancy/Applicant.html')
 
+# *****************---Add Department Details---*******************
+@vacancy.route('/Add_Department')
+@login_required
+def add_Department():
+	return render_template('Admin/Vacancy/AddDepartment.html')
+
+
+
+
+
 # ------------------------------------------------------------------
 						# WEBSITE FUNCTIONS
 # ------------------------------------------------------------------

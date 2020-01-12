@@ -29,3 +29,10 @@ def AddDepartments():
     Department(DepDescription = "Financial").save()
     Department(DepDescription = "Product").save()
     return "Done"
+@TestData.route('/AddCategory',methods=['GET'])
+def AddCategory():
+    FinishedGoodCategory(CatDescription = "Wafers").save()
+    FinishedGoodCategory(CatDescription = "Cream Biscuits").save()
+    FinishedGoodCategory(CatDescription = "Cracker").save()
+    FinishedGoodCategory(CatDescription = "Cookies").save()
+    return "Done"

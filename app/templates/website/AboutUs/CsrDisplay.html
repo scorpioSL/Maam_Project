@@ -12,6 +12,12 @@
   .list-group-item {
     color: #1d809f;
   }
+  .font-14{
+    font-size: 14px;
+  }
+  .font-13{
+    font-size: 13px;
+  }
 </style>
 
 
@@ -39,16 +45,16 @@
           {% endif %}
 
           <div class="row mb-4">
-            <div class="col-xl-10 col-lg-10 mx-auto">
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+            <div class="col-xl-9 col-lg-9 mx-auto">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <a href="{{ url_for('Posts.UniquePost',PostID = CSR.id) }}">
-                    <span class="section-heading-lower">{{ CSR.PostTittle|upper }}</span>
+                    <span class="section-heading-lower font-14">{{ CSR.PostTittle|upper }}</span>
                   </a>
                 </h5>
                 <!-- subTittle -->
                 {% if CSR.PostSubTitle %}
-                <p>{{ CSR.PostSubTitle|upper }}</p>
+                <p class="font-13">{{ CSR.PostSubTitle|upper }}</p>
                 {% endif %}
 
                 <hr>
@@ -70,7 +76,7 @@
           {% if not AllCSR %}
           <div class="row mb-4">
             <div class="col-xl-8 col-lg-6 mx-auto">
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <span class="section-heading-lower">No Post Found!</span>
                 </h5>

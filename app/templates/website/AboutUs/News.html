@@ -11,6 +11,12 @@
   .list-group-item {
     color: #1d809f;
   }
+  .font-14{
+    font-size: 14px;
+  }
+  .font-13{
+    font-size: 13px;
+  }
 </style>
 
 
@@ -38,16 +44,16 @@
 
           {% if not News.PostImage %}
           <div class="row mb-5">
-            <div class="col-xl-10 col-lg-10 mx-auto">
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+            <div class="col-xl-9 col-lg-9 mx-auto">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <a href="{{ url_for('Posts.UniquePost',PostID = News.id) }}">
-                    <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                    <span class="section-heading-lower font-14">{{ News.PostTittle }}</span>
                   </a>
                 </h5>
                 <!-- subTittle -->
                 {% if News.PostSubTitle %}
-                <p>{{ News.PostSubTitle }}</p>
+                <p class="font-13">{{ News.PostSubTitle }}</p>
                 {% endif %}
                 <hr>
                 <p class="mt-2">{{ News.PostContent }}</p>
@@ -56,17 +62,17 @@
           </div>
           {% else %}
           <div class="row mb-5">
-            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+            <div class="col-xl-9 col-lg-9 mx-auto mt-2">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <a href="{{ url_for('Posts.UniquePost',PostID = News.id) }}">
-                    <span class="section-heading-lower">{{ News.PostTittle }}</span>
+                    <span class="section-heading-lower font-14">{{ News.PostTittle }}</span>
                   </a>
                 </h5>
                 <hr>
                 <!-- subTittle -->
                 {% if News.PostSubTitle %}
-                <p>{{ News.PostSubTitle }}</p>
+                <p class="font-13">{{ News.PostSubTitle }}</p>
                 {% endif %}
                 <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
                   src="{{ url_for('static',filename = News.PostImage) }}" alt="">

@@ -1,5 +1,19 @@
 {% extends "website/homeLayout.html" %}
 {% block content %}
+<style>
+  .input-group.search{
+    margin-top: 6px;
+  }
+  #SearchButton{
+    background-color: #0f2b72;
+  }
+  .fa-search{
+    color: white;
+  }
+  .font-10{
+    font-size: 13px;
+  }
+</style>
 
 <section>
   <div class="container-fluid">
@@ -9,7 +23,7 @@
 
 
         <div class="col-md-12">
-          <div class="input-group md-form form-sm form-2 pl-0 col-md-4">
+          <div class="input-group search md-form form-sm form-2 pl-0 col-md-4">
             <input class="form-control my-0 py-1 amber-border" type="text" id="TextBoxSearch" placeholder="Search"
               aria-label="Search">
             <div class="input-group-append">
@@ -35,15 +49,15 @@
                   <div class="card-body">
 
                     <!-- Title -->
-                    <h5 class="card-title" id="title">Card title</h5>
+                    <h5 class="card-title font-10"  id="title">Card title</h5>
                     <!-- Text -->
                     <div class="row">
                       <div class="col-md-6">
-                        <p id="Unit"></p>
+                        <p class="font-10" id="Unit"></p>
                       </div>
 
                       <div class="col-md-6">
-                        <p id="Price"></p>
+                        <p class="font-10" id="Price"></p>
                         </div>
 
                     </div>
@@ -66,7 +80,7 @@
       <div class=" col-md-3">
 
         <div class="list-group mt-2">
-          <li class="list-group-item active" style="background-color: #0f2b72">Categories</li>
+          <li class="list-group-item active " style="background-color: #0f2b72">Categories</li>
           <div id="ItemCategoryGroupButtons">
           </div>
         </div>

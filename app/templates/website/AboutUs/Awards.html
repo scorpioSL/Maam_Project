@@ -10,6 +10,12 @@
   .list-group-item {
     color: #1d809f;
   }
+  .font-14{
+    font-size: 14px;
+  }
+  .font-13{
+    font-size: 13px;
+  }
 </style>
 
 </section>
@@ -21,8 +27,8 @@
           {% if not AllAwards %}
           <!-- Create a Empty view here if no posts are available -->
           <div class="row">
-            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+            <div class="col-xl-9 col-lg-9 mx-auto mt-2">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <span class="section-heading-lower text-center"> Post Not found !</span>
                 </h5>
@@ -33,7 +39,7 @@
           {% for award in AllAwards %}
           {% if not award.PostImage %}
           <div class="row">
-            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+            <div class="col-xl-9 col-lg-9 mx-auto mt-2">
               <!-- Change the css as you want. I just put the css -->
               {% if current_user.UserType %}
               {% if current_user.UserType.TypeDescription == 'Admin' %}
@@ -50,15 +56,15 @@
               {% endif %}
               {% endif %}
               <!-- end of delete box -->
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
-                    <span class="section-heading-lower">{{ award.PostTittle }}</span>
+                    <span class="section-heading-lower font-14">{{ award.PostTittle }}</span>
                   </a>
                 </h5>
                 <!-- subTittle -->
                 {% if award.PostSubTitle %}
-                <p>gghfhgfg</p>
+                <p class="font-13">{{award.PostSubTitle}}</p>
                 {% endif %}
                 <hr>
 
@@ -68,7 +74,7 @@
           </div>
           {% else %}
           <div class="row">
-            <div class="col-xl-10 col-lg-10 mx-auto mt-2">
+            <div class="col-xl-9 col-lg-9 mx-auto mt-2">
               <!-- Change the css as you want. I just put the css -->
               {% if current_user.UserType %}
               {% if current_user.UserType.TypeDescription == 'Admin' %}
@@ -85,15 +91,15 @@
               {% endif %}
               {% endif %}
               <!-- end of delete box -->
-              <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+              <div class="bg-faded rounded p-5" style="background-color: #f7f6f6">
                 <h5 class="section-heading mb-2">
                   <a href="{{ url_for('Posts.UniquePost',PostID = award.id) }}">
-                    <span class="section-heading-lower ">{{ award.PostTittle }}</span>
+                    <span class="section-heading-lower font-14">{{ award.PostTittle }}</span>
                   </a>
                 </h5>
                 <!-- subTittle -->
                 {% if award.PostSubTitle %}
-                <p>{{ award.PostSubTitle }}</p>
+                <p class="fontt-13">{{ award.PostSubTitle }}</p>
                 {% endif %}
                 <hr>
                 <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
