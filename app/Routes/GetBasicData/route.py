@@ -145,3 +145,12 @@ def SetVacancyAutoCompleteSelected(VacancyTitle):
         index = index + 1
     obj = {"Message":"Success","ItemID":str(VacancyObj.id),"Title":VacancyObj.Tittle,"DepartmentIndex":index,"Poster":VacancyObj.Poster}
     return jsonify(obj)
+
+@GetBasicData.route('/getuserdata',methods = ['GET'])
+def GetUserData():
+    Users = User.objects(Archived = False).order_by('-_id')
+    Data = []
+    for user in Users:
+        obj = {"Id":str(user.id),"Username":user.UserName,"UserType":user.UserType.TypeDescription,"UserAccess":user.UserAccess}
+        Data.append(obj)
+    return jsonify(Data)
