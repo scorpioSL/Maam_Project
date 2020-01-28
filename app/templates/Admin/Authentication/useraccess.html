@@ -94,15 +94,8 @@
     <script>
 
         $(document).ready(function () {
-            // var ShowAlert = '{{ ShowAlert }}'
-            // if (ShowAlert == 'True') {
-            //     // $('#ShowSuccessAlert').removeAttr('hidden');
-            //     alertify.success("Successfully Registered!");
-            // }
-
             fillTable();
         });
-
 
 
 
@@ -170,16 +163,14 @@
             $.ajax({
                 url: '/useraccess',
                 type: 'post',
-                data: { "Access": $DropDown,"Id":elementId },
+                data: { "Access": $DropDown, "Id": elementId },
                 success: function (data) {
-                    if(data.Type == "Success")
-                    {
+                    if (data.Type == "Success") {
                         alertify.success("Successfully Changed!");
                         $('#UserAccessTable tbody').empty();
                         fillTable();
                     }
-                    else
-                    {
+                    else {
                         alertify.error("Error!");
                     }
                 },
@@ -192,7 +183,6 @@
         }
 
     </script>
-
 </body>
 
 </html>

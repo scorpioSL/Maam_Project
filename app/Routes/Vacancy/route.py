@@ -93,6 +93,15 @@ def delete_Vacancy(VacancyId):
 	JsonResponse = {"Type":"Success","Message":Message}
 	return jsonify(JsonResponse)
 
+@vacancy.route('/GetAllVacancies',methods = ['GET'])
+def getallVacancies():
+    Vacancies = Vacancy.objects(Archived = False).order_by('-_id')
+    Data = []
+    for vacancy in Vacancies:
+        obj = {"Id":str(vacancy.id),"Title":vacancy.Tittle,"Department":vacancy.Department.DepDescription,"Poster":vacancy.Poster,"Date":vacancy.DateCreated[0:11]}
+        Data.append(obj)
+    return jsonify(Data)
+
 # *****************---View Applicant Details---*******************
 @vacancy.route('/View_Applicant')
 @login_required

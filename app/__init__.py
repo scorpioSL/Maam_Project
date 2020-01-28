@@ -4,6 +4,7 @@ from flask import*
 from app.config.config import Config
 from flask_login import LoginManager
 from app.database.models import User
+from flask_mail import Mail
 
 
 # Creating Flask Object
@@ -23,6 +24,8 @@ def load_user(user_id):
 
 ##Configurations for the server from a seperate file
 app.config.from_object(Config)
+
+mail = Mail(app)
 
 from app.Routes.Authentication.route import admin
 from app.Routes.Website.route import website

@@ -2,78 +2,116 @@
 {% block content %}
 
 <style>
-    .white{
-        color: white
-    }
+  .white {
+    color: white
+  }
 
-    ul#horizontal-list li {
+  ul#horizontal-list li {
     display: inline;
   }
 </style>
 
 <section class="page-section about-heading">
-     <div class="container">
-       
-      <div class="about-heading-content mt-2">
-       
-        <div class="row">
-            <div class="col-xl-8 col-lg-6 mx-auto mt-2">
-                <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
-                <h5 class="section-heading mb-2">
-                  <span class="section-heading-lower " style="color: #3b5998">Job Tittle</span>
-                </h5>
-                <hr>
-                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="https://jobvacancies-lk.s3.ap-southeast-1.amazonaws.com/Recruiter/2017/September/Talent-Find-Recruitment-Consultants/August-2018/Sales-%26-Marketing-Executive-Advertising-Field--2235/Ad-Images/Sales-%26-Marketing-Executive-Advertising-Field-.jpg" alt="">
-                <p class="mt-2">Department: <span>Department Name</span></p>
-                <h4>Interested in this job? Submit your application.</h4>
-                <div class="col-xl-8 col-lg-4 mx">
+  <div class="container">
 
-                        <div class="btn-group mt-4 " role="group" aria-label="Basic example">
-                               
-                                <button type="button" class="btn btn-danger mr-3">Download</button>
-                                <button type="button" class="btn btn-info mr-3">Apply Now</button>
-                        </div>
+    <div class="about-heading-content mt-2">
+
+      <div class="row">
+        <div class="col-xl-8 col-lg-6 mx-auto mt-2" id="VacancyRow">
+          <template id="Vacancy">
+            <div class="bg-faded rounded p-5" style="background-color: #cdcdd8">
+              <h5 class="section-heading mb-2">
+                <span id="VacancyTitle" class="section-heading-lower " style="color: #3b5998"></span>
+              </h5>
+              <hr>
+              <img id="VacancyImage" class="img-fluid rounded about-heading-img mb-3 mb-lg-0"
+                src="https://jobvacancies-lk.s3.ap-southeast-1.amazonaws.com/Recruiter/2017/September/Talent-Find-Recruitment-Consultants/August-2018/Sales-%26-Marketing-Executive-Advertising-Field--2235/Ad-Images/Sales-%26-Marketing-Executive-Advertising-Field-.jpg"
+                alt="">
+              <p class="mt-2">Department: <span id="VacancyDepartment"></span></p>
+              <h4>Interested in this job? Submit your application.</h4>
+              <div class="col-xl-8 col-lg-4 mx">
+
+                <div class="btn-group mt-4 " role="group" aria-label="Basic example">
+
+                  <button id="DownLoad" class="btn btn-danger mr-3" type="submit">Download!</button>
+                  <button type="button" onclick="window.location.href=`{{ url_for('Vacancy.job_Application') }}`" id="ApplyNow" class="btn btn-info mr-3">Apply Now</button>
                 </div>
-                
-                
-
               </div>
-              <div>
-                  <p style="font-size: small; color: #8e8080;">POST ON <span style="color: red;">24.11.2019</span> </p>
-                </div>
-               <!-- bottom nav -->
-    <div>
-            <div id="menu-outer" style="margin-top:10px">
-      <div class="table">
-        <ul id="horizontal-list">
-            <li><a href="#" href="{{url_for('Vacancy.view_Career')}}">Career Overview <span>|</span></a></li>
-            <li><a href="{{url_for('Vacancy.view_Vacancy')}}">Vacancy <span>|</span></a></li>
-            <li><a href="{{url_for('Vacancy.job_Application')}}">Job Application </a></li>
-        </ul>
-      </div>
-    </div>
-        </div>
-           <!-- bottom nav -->
-    
-       
-              
-            </div>
-            <div class="col-md-3">
-                    <div class="list-group mt-2">
-                            <li class="list-group-item active text-center" style="background-color:#0f2b72;">Departments</li>
-                            <button type="button" class="list-group-item list-group-item-action">Human Resource</button>
-                            <button type="button" class="list-group-item list-group-item-action">Management</button>
-                            <button type="button" class="list-group-item list-group-item-action">Accounts</button>
-                        </div>
-            </div>
-            
-          </div>
-      </div>
-    </div>
-</div>
 
-  </section>
+
+
+            </div>
+            <div>
+              <p style="font-size: small; color: #8e8080;">POST ON <span id="Date" style="color: red;">24.11.2019</span> </p>
+            </div>
+          </template>
+          <h2 id="NoVacancies" class="text-danger ml-4 mt-4 animated fadeIn">No Vacancies Found!</h2>
+          <!-- bottom nav -->
+          <div>
+            <div id="menu-outer" style="margin-top:10px">
+              <div class="table">
+                <ul id="horizontal-list">
+                  <li><a href="#" href="{{url_for('Vacancy.view_Career')}}">Career Overview <span>|</span></a></li>
+                  <li><a href="{{url_for('Vacancy.view_Vacancy')}}">Vacancy <span>|</span></a></li>
+                  <li><a href="{{url_for('Vacancy.job_Application')}}">Job Application </a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- bottom nav -->
+
+
+
+        </div>
+        <div class="col-md-3">
+          <div class="list-group mt-2">
+            <li class="list-group-item active text-center" style="background-color:#0f2b72;">Departments</li>
+            <button type="button" class="list-group-item list-group-item-action">Human Resource</button>
+            <button type="button" class="list-group-item list-group-item-action">Management</button>
+            <button type="button" class="list-group-item list-group-item-action">Accounts</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+</section>
+
+<script>
+  $(document).ready(function () {
+    LoadVacancies();
+  });
+
+
+  function LoadVacancies() {
+    $('#NoVacancies').attr('hidden', 'true');
+    var VacancyRow = document.querySelector('#VacancyRow');
+    var Template = document.querySelector('#Vacancy');
+
+    fetch('/GetAllVacancies').then((Response) => {
+      Response.json().then((data) => {
+        if (data.length === 0) {
+          $('#NoVacancies').removeAttr('hidden');
+          return;
+        }
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          let TemplateClone = Template.content.cloneNode(true);
+          TemplateClone.querySelector('#DownLoad').setAttribute('onclick',`window.open('/static${data[i]['Poster']}')`);
+          TemplateClone.querySelector('#VacancyImage').setAttribute('src', '/static' + data[i]['Poster']);
+          TemplateClone.querySelector('#VacancyTitle').innerHTML = data[i]['Title'];
+          TemplateClone.querySelector('#VacancyDepartment').innerHTML = data[i]['Financial'];
+          TemplateClone.querySelector('#Date').innerHTML = data[i]['Date'];
+
+          VacancyRow.appendChild(TemplateClone);
+        }
+      });
+    });
+  }
+
+</script>
 
 
 {% endblock content%}
-

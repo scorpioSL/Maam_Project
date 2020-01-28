@@ -3,6 +3,7 @@ from app.database.models import User, UserType, PostType, FinishedGoodCategory
 from app import bcrypt
 from app import LoginManager
 from flask_login import login_user, current_user, logout_user, login_required
+from app.MyFunctions import SendMail
 
 admin = Blueprint('Authentication', __name__)
 
@@ -16,7 +17,7 @@ admin = Blueprint('Authentication', __name__)
 def login():
     if current_user.is_authenticated:
         # If User Is ALready Logged In Redirect The user
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('Authentication.dashboard'))
     ShowAlert = False
     if request.method == 'POST':
         Username = request.form['Username']
@@ -48,7 +49,7 @@ def login():
 def register():
     if current_user.is_authenticated:
         # If User Is ALready Logged In Redirect The user
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('Authentication.dashboard'))
     if request.method == 'POST':
         # Checking wether UserTypes exhist or not, If not add to db
         CheckUserTypes = UserType.objects().count()
@@ -78,7 +79,8 @@ def register():
         if CountUsers > 0:
             UserTypeObj = UserType.objects(TypeDescription="User").first()
             User(UserName=Username, UserPassword=HashedPassword, UserType=UserTypeObj,
-                 UserCreated=str(User.objects().first().UserName)).save()
+                 UserCreated=str(User.objects().first().UserName),UserAccess=False).save()
+            SendMail("New User Registered!","A new user Username:{} has been registered!, Kindly check user and give the permission!".format(Username),current_app.config['ADMIN_MAILS'])
             Message = "Successfully registered!"
             JsonResponse = {'Type': "Success", 'Message': Message}
             return jsonify(JsonResponse)
