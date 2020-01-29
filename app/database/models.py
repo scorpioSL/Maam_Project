@@ -97,11 +97,13 @@ class FeedbackType(db.Document):
 
 class Applicant(db.Document):
 	ApplicantName=db.StringField()
-	ApplicantFullname=db.StringField()
 	ApplicantAddress=db.StringField()
+	ApplicantEmail=db.StringField()
+	ApplicantNumber=db.StringField()
 	ApplicantAcadamicQuali=db.StringField()
 	ApplicantOtherQuali=db.StringField()
 	ApplicantExperience=db.StringField()
+	ApplicantCV = db.StringField()
 	Archived=db.BooleanField(default=False)
 	UserCreated=db.StringField()
 	DateCreated=db.StringField(default=str(datetime.datetime.now()))

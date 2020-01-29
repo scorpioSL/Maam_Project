@@ -16,6 +16,7 @@ class Config():
     MAIL_SUPPRESS_SEND = False
     IMAGES_FOLDER = "/static/Images/"
     IMAGES_PATH = "Images/"
+    CV_PATH = "/static/CV/"
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
     TESTING = True
     ADMIN_MAILS = ['shaheekanaleem1995@gmail.com']
